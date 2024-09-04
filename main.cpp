@@ -1,12 +1,26 @@
 #include <iostream>
-#include "userInfo.h"
+#include "login.h"
 #include "addEmployee.h"
+
 using namespace std;
 
-int main() {
+void list() {
+    cout << "===========================================================" << endl;
+    cout << "";
+}
 
-    AddEmployee employee1;
-    employee1.setEmployeeData();
+void ui() {
+    Login admin1;
+    if (admin1.userLogin()) {
+        AddEmployee employee1;
+        employee1.setEmployeeData();
+    }
+}
+
+int main() {
+    system("cls");
+
+    ui();
 
     return 0;
 }
