@@ -1,6 +1,7 @@
 #include <iostream>
 #include "login.h"
 #include "addEmployee.h"
+#include "DeleteEmployee.h"
 
 using namespace std;
 
