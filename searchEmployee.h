@@ -9,9 +9,6 @@ using namespace std;
 class SearchEmployee{
     public :
 
-
-
-
         void searchEmployee() {
             short choice;
             do {
@@ -48,6 +45,7 @@ class SearchEmployee{
             string role;
 
             void searchEmployeeByName() {
+
             cout << "[+] Enter employee's name : ";
             cin.ignore();
             getline(cin, employeeName);
