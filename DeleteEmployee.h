@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <limits>
 #include "AddEmployee.h"
+#include "BackupEmployee.h"
 
 using namespace std;
 
@@ -56,10 +57,17 @@ class DeleteEmployee {
                 auto itID = find(employeeIDs.begin(), employeeIDs.end(), id);
                     if (itID != employeeIDs.end()) {
                         size_t index = distance(employeeIDs.begin(), itID);
+                        
+                        employeeIDsBackup.push_back(employeeIDs[index]);
+                        employeeNamesBackup.push_back(employeeNames[index]);
+                        employeeRolesBackup.push_back(employeeRoles[index]);
+                        employeeSalariesBackup.push_back(employeeSalaries[index]);
+
                         employeeIDs.erase(employeeIDs.begin() + index);
                         employeeNames.erase(employeeNames.begin() + index);
                         employeeSalaries.erase(employeeSalaries.begin() + index);
                         employeeRoles.erase(employeeRoles.begin() + index);
+                        
                         cout << "Employee with ID " << id << " deleted successfully." << endl;
                     } 
                     else {
@@ -69,7 +77,7 @@ class DeleteEmployee {
 
             void deleteEmployeeByUsername() {
                 string username;
-                cout << "[+] Enter employee's username to delete: ";
+                cout << "[+] Enter employee Username to delete: ";
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 getline(cin, username);
 
