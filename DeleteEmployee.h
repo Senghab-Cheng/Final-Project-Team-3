@@ -5,7 +5,7 @@
 #include <vector>
 #include <algorithm>
 #include <limits>
-#include "addEmployee.h"
+#include "AddEmployee.h"
 
 using namespace std;
 
@@ -15,6 +15,7 @@ class DeleteEmployee {
         vector<double>& employeeSalaries;
         vector<int>& employeeIDs;
         vector<string>& employeeRoles;
+
     public:
         DeleteEmployee(vector<string>& names, vector<double>& salaries, vector<int>& ids, vector<string>& roles) 
         : employeeNames(names), employeeSalaries(salaries), employeeIDs(ids), employeeRoles(roles) {}
@@ -22,25 +23,27 @@ class DeleteEmployee {
     void manage() {
         short option;
         do {
-            cout << "Select an option" << endl;
-            cout << "1. Delete Employee by ID" << endl;
-            cout << "2. Delete Employee by Username" << endl;
-            cout << "0. Exit" << endl;
+            listForDelete();
             cout << "[+] Enter your option here: ";
             cin >> option;
 
             switch (option) {
                 case 1:
+                    system("cls");
                     deleteEmployeeById();
                     break;
                 case 2:
+                    system("cls");
                     deleteEmployeeByUsername();
+                    break;
+                case 0 : 
+                    cout << "Exiting..." << endl;
                     break;
                 default:
                     cout << "INVALID OPTION!" << endl;
                     break;
             }
-            
+
         } while (option);
     }
 
@@ -82,5 +85,19 @@ class DeleteEmployee {
                     else {
                         cout << "Employee with username \"" << username << "\" not found." << endl;
                     }
+            }
+
+            void listForDelete() {
+                cout << "=========================================================================" << endl;
+                cout << ">                           | Delete Employee |                         <" << endl;
+                cout << ">>=====================================================================<<" << endl;
+                cout << ">>>                                                                   <<<" << endl;
+                cout << ">>>>                                                                 <<<<" << endl;
+                cout << ">>>>>                    1. Delete Employee By ID                   <<<<<" << endl;
+                cout << ">>>>                     2. Delete Employee By Username              <<<<" << endl;
+                cout << ">>>                      0. Exit                                      <<<" << endl;
+                cout << ">>                                                                     <<" << endl;
+                cout << ">                                                                       <" << endl;
+                cout << "=========================================================================" << endl;
             }
 };

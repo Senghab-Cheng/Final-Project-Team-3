@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <string>
-#include "userInfo.h"
+#include "AdminInfo.h"
 
 using namespace std;
 

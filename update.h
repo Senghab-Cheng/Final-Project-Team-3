@@ -2,8 +2,8 @@
 
 #include <iostream>
 #include <vector>
-#include "addEmployee.h"
-#include "userInfo.h"
+#include "AddEmployee.h"
+#include "AdminInfo.h"
 
 using namespace std;
 
