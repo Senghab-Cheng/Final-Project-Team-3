@@ -14,6 +14,7 @@ class SearchEmployee{
 
         void searchEmployee() {
             cout << "[+] Enter employee's name : ";
+            cin.ignore();
             getline(cin, employeeName);
 
             cout << "[+] Enter employee's ID : ";
@@ -24,7 +25,7 @@ class SearchEmployee{
                 employeeNameLetter = employeeName[0];
                 for (int i = 0; i < employeeNames.size(); i++) {
                     string name = employeeNames[i];
-                    for (int j = 0; j < employeeNames.size(); j++) {
+                    for (int j = 0; j < name.length(); j++) {
                         if (name[j] == employeeNameLetter) {
                             cout << "Employee's Name : " << name << endl;
                             cout << "Employee's ID : " << employeeIDs[i] << endl;
