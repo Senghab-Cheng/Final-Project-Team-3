@@ -1,4 +1,5 @@
 #pragma once
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -38,7 +39,7 @@ class DeleteEmployee {
     void deleteEmployeeByUsername() {
         string username;
         cout << "[+] Enter employee's username to delete: ";
-        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear input buffer
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         getline(cin, username);
 
         auto itName = find(employeeNames.begin(), employeeNames.end(), username);
