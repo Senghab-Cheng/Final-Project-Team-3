@@ -13,7 +13,7 @@ using namespace std;
 
 void listForAdminOrEmployee() {
     cout << "=========================================================================" << endl;
-    cout << ">                       | Please Enter your option |                    <" << endl;
+    cout << ">                          | Management System |                        <" << endl;
     cout << ">>=====================================================================<<" << endl;
     cout << ">>>                                                                   <<<" << endl;
     cout << ">>>>                                                                 <<<<" << endl;
