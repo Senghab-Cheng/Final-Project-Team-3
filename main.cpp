@@ -7,6 +7,7 @@
 #include "DeleteEmployee.h"
 #include "Update.h"
 #include "ListEmployee.h"
+#include "employeePaymentRoll.h"
 
 using namespace std;
 
