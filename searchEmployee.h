@@ -1,4 +1,4 @@
-#pragma once 
+#pragma once
 
 #include <iostream>
 #include <vector>
@@ -13,10 +13,11 @@ class SearchEmployee{
         string role;
 
         void searchEmployee() {
-            cout << "[+] Enter employee's name : ";
+            cout << "[+] Enter employee's name for search : ";
+            cin.ignore();
             getline(cin, employeeName);
 
-            cout << "[+] Enter employee's ID : ";
+            cout << "[+] Enter employee's ID for search   : ";
             cin >> id;
 
             char employeeNameLetter;
@@ -24,28 +25,26 @@ class SearchEmployee{
                 employeeNameLetter = employeeName[0];
                 for (int i = 0; i < employeeNames.size(); i++) {
                     string name = employeeNames[i];
-                    for (int j = 0; j < employeeNames.size(); j++) {
+                    for (int j = 0; j < name.length(); j++) {
                         if (name[j] == employeeNameLetter) {
-                            cout << "Employee's Name : " << name << endl;
-                            cout << "Employee's ID : " << employeeIDs[i] << endl;
-                            cout << "Employee's Role : " << employeeRoles[i] << endl;
+                            cout << "Employee's Name   : " << name << endl;
+                            cout << "Employee's ID     : " << employeeIDs[i] << endl;
+                            cout << "Employee's Role   : " << employeeRoles[i] << endl;
                             cout << "Employee's Salary : " << employeeSalaries[i] << "$" << endl;
-                            break;
+                            //break;
                         }
                     }
                 }
-            }
-            else {
-                for (int i = 0; i < employeeNames.size(); i++) {
+            }else {
+                for (int i=0; i < employeeNames.size(); i++) {
                     if (employeeName == employeeNames[i]) {
-                        cout << "Employee's Name : " << employeeNames[i] << endl;
-                        cout << "Employee's ID : " << employeeIDs[i] << endl;
-                        cout << "Employee's Role : " << employeeRoles[i] << endl;
+                        cout << "Employee's Name   : " << employeeNames[i] << endl;
+                        cout << "Employee's ID     : " << employeeIDs[i] << endl;
+                        cout << "Employee's Role   : " << employeeRoles[i] << endl;
                         cout << "Employee's Salary : " << employeeSalaries[i] << "$" << endl;
-                        break;
+                        //break;
                     }
                 }
             }
-        } 
-
+        }
 };

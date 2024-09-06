@@ -20,6 +20,7 @@ class AddEmployee{
     public :
         void setEmployeeData() {
             cout << "[+] Enter employee's name : ";
+            cin.ignore();
             getline(cin, this->employeeName);
             employeeNames.push_back(this->employeeName);
 
@@ -36,5 +37,4 @@ class AddEmployee{
             cin >> this->employeeSalary;
             employeeSalaries.push_back(this->employeeSalary);
         }
-        
 };

@@ -21,7 +21,7 @@ class Login{
 
             Admin admin1;
             if ((this->usernameOrEmail == admin1.getUsername() || this->usernameOrEmail == admin1.getEmail()) && this->password == admin1.getPassword()) {
-                return 1;
+            return 1;
             }
         return 0;
         }
