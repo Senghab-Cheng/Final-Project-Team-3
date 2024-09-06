@@ -45,11 +45,13 @@ void ui() {
         system("cls");
         // AddEmployee employee1;
         // employee1.setEmployeeData();
-        SearchEmployee employee1a;
-        employee1a.searchEmployee(); 
+        // SearchEmployee employee1a;
+        // employee1a.searchEmployee(); 
 
         ListEmployees employee1b;
-        employee1b.listEmployee();        
+        employee1b.listRoles();   
+        //employee1b.listEmployee();
+             
          
     }
 }
