@@ -1,6 +1,8 @@
-#pragma ocne 
+#pragma once
 
 #include <iostream>
+#include <algorithm>
+#include <iomanip>
 #include "AddEmployee.h"
 
 using namespace std;
@@ -77,6 +79,27 @@ class ListEmployees {
                     }
                 }
             } while(op);
-        }   
+        }  
+
+        void listRoles() {
+            vector<string> roles = employeeRoles; // pass values of employeeRoles to roles
+            sort(roles.begin(), roles.end());
+            auto it = unique(roles.begin(), roles.end());
+            roles.erase(it, roles.end());
+
+            int count = 0;
+            cout << "Role : " << endl;
+            for (int i = 0; i < roles.size(); i++) {
+                cout << roles[i];
+                for (int j = 0; j < employeeRoles.size(); j++) {
+                    if (employeeRoles[j] == roles[i]) {
+                    count++;
+                    }
+                }
+                cout<< "\t\t" << count << endl;
+                count = 0;
+            }
+            cout << endl << "Employee : " << employeeRoles.size() << endl;
+        } 
 
 };

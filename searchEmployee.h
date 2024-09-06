@@ -67,7 +67,7 @@ class SearchEmployee{
                         }
                     }
                 }
-                if (!isFound) cout << "Name is not in the list." << endl;
+                if (!isFound) cout << "Employee with name / " << employeeName << " / not found." << endl;
             }
             else {
                 for (int i = 0; i < employeeNames.size(); i++) {
@@ -76,9 +76,11 @@ class SearchEmployee{
                         cout << "Employee's ID : " << employeeIDs[i] << endl;
                         cout << "Employee's Role : " << employeeRoles[i] << endl;
                         cout << "Employee's Salary : " << employeeSalaries[i] << "$" << endl;
+                        isFound = 1;
                         break;
                     }
                 }
+                if (!isFound) cout << "Employee with name / " << employeeName << " / not found." << endl;
             }
         } 
 
@@ -93,7 +95,7 @@ class SearchEmployee{
                 cout << "Employee's Role : " << employeeRoles[id-1] << endl;
                 cout << "Employee's Salary : " << employeeSalaries[id-1] << "$" << endl;
             }
-            else cout << "Name is not in the list." << endl;
+            else cout << "Employee with ID " << id << " not found" << endl;
         }
 
             void listForSearchEmployee() {
