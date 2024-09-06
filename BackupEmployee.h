@@ -12,9 +12,17 @@ vector<string> employeeRolesBackup;
 vector<int> employeeIDsBackup;
 vector<double> employeeSalariesBackup;
 
-class BackupEmployeeData {
+class BackupDataFunctions {
+    public : 
+        virtual void listBackupData() = 0;
+        virtual void emptyData() = 0;
+        virtual void restoreDataByID() = 0;
+        virtual void restoreAllData() = 0;
+};
+
+class BackupEmployeeData : private BackupDataFunctions{
     private :
-        void listBackupData() {
+        void listBackupData() override{
             for (int i = 0; i < employeeIDsBackup.size(); i++) {
                 cout << "Name " << employeeNamesBackup[i] << endl;
                 cout << "ID : " << employeeIDsBackup[i] << endl;
@@ -23,7 +31,7 @@ class BackupEmployeeData {
             }
         }
 
-        void emptyData() {
+        void emptyData() override{
             listBackupData();
             char choice;
             cout << "Are you sure you want to empty backup data? [Y/N] : "; cin >> choice;
@@ -37,15 +45,16 @@ class BackupEmployeeData {
             else return;
         }
 
-        void restoreDataByID() {
+        void restoreDataByID() override{
+            listBackupData();
             int id;
-            cout << "[+] Enter employee ID to restore data : "; cin >> id;
+            cout << "[+] Enter the employee ID to restore the data : "; cin >> id;
 
-            if (id < 0 && id > employeeIDsBackup.size()) {
+            if (id > 0 && id <= employeeIDsBackup.size()) {
                 auto it = find(employeeIDsBackup.begin(), employeeIDsBackup.end(), id);
                 if (it != employeeIDsBackup.end()) {
                     int i = distance(employeeIDsBackup.begin(), employeeIDsBackup.end());
-                    employeeNamesBackup.push_back(employeeNamesBackup[i]);
+                    employeeNames.push_back(employeeNamesBackup[i]);
                     employeeIDs.push_back(employeeIDsBackup[i]);
                     employeeRoles.push_back(employeeRolesBackup[i]);
                     employeeSalaries.push_back(employeeSalariesBackup[i]);
@@ -56,7 +65,7 @@ class BackupEmployeeData {
             else cout << "INVALID EMPLOYEE ID!" << endl;  
         }
 
-        void restoreAllData() {
+        void restoreAllData() override{
             char choice;
             cout << "Are you sure you want to restore all data? [Y/N] : "; cin >> choice;
             if (choice == 'Y' || choice == 'y') {
@@ -71,9 +80,54 @@ class BackupEmployeeData {
             else return;
         }
 
-        public :
-            void backupData() {
-                
-            }
+        void listMenuBackupData() {
+            cout << "=========================================================================" << endl;
+            cout << ">                            | Backup Data |                            <" << endl;
+            cout << ">>=====================================================================<<" << endl;
+            cout << ">>>                                                                   <<<" << endl;
+            cout << ">>>>                      1. Restore Data by ID                      <<<<" << endl;
+            cout << ">>>>>                     2. Restore All Data                       <<<<<" << endl;
+            cout << ">>>>                      3. Empty Data                              <<<<" << endl;
+            cout << ">>>                       0. Exit                                     <<<" << endl;
+            cout << ">>                                                                     <<" << endl;
+            cout << ">                                                                       <" << endl;
+            cout << "=========================================================================" << endl;
+        }
 
+        public :
+
+            void backupData() {
+                short option;
+                do {        
+                    listBackupData();
+                    cout << "[+] Enter your option : "; cin >> option;
+
+                    switch(option) {
+                        case 1 : {
+                            system("cls");
+                            restoreDataByID();
+                            break;
+                        }
+                        case 2 : {
+                            system("cls");
+                            restoreAllData();
+                            break;
+                        }
+                        case 3 : {
+                            system("cls");
+                            emptyData();
+                            break;
+                        }
+                        case 0 : {
+                            cout << "Exiting..." << endl;
+                            break;
+                        }
+                        default : {
+                            cout << "INVALID OPTION!" << endl;
+                            break;
+                        }
+                    }
+
+                } while (option);
+            }
 };
