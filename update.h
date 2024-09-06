@@ -45,7 +45,6 @@ class Update{
             void update(){
                 short option;
                 do{
-                //int option;
                     cout << "Select one to update" << endl;
                     cout << "1.Update Salary" << endl;
                     cout << "2.Update Role" << endl;

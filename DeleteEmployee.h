@@ -1,8 +1,6 @@
 #pragma once
 
 #include <iostream>
-#include <string>
-#include <vector>
 #include <algorithm>
 #include <limits>
 #include "AddEmployee.h"
@@ -11,21 +9,21 @@
 using namespace std;
 
 class DeleteEmployee {
-    private:
-        vector<string>& employeeNames;
-        vector<double>& employeeSalaries;
-        vector<int>& employeeIDs;
-        vector<string>& employeeRoles;
+    // private:
+    //     vector<string>& employeeNames;
+    //     vector<double>& employeeSalaries;
+    //     vector<int>& employeeIDs;
+    //     vector<string>& employeeRoles;
 
     public:
-        DeleteEmployee(vector<string>& names, vector<double>& salaries, vector<int>& ids, vector<string>& roles) 
-        : employeeNames(names), employeeSalaries(salaries), employeeIDs(ids), employeeRoles(roles) {}
+        // DeleteEmployee(vector<string>& names, vector<double>& salaries, vector<int>& ids, vector<string>& roles) 
+        // : employeeNames(names), employeeSalaries(salaries), employeeIDs(ids), employeeRoles(roles) {}
 
     void manage() {
         short option;
         do {
             listForDelete();
-            cout << "[+] Enter your option here: ";
+            cout << "[+] Enter your option : ";
             cin >> option;
 
             switch (option) {
@@ -51,7 +49,7 @@ class DeleteEmployee {
     private :
             void deleteEmployeeById() {
                 int id;
-                cout << "[+] Enter employee's ID to delete: ";
+                cout << "[+] Enter employee ID to delete: ";
                 cin >> id;
 
                 auto itID = find(employeeIDs.begin(), employeeIDs.end(), id);

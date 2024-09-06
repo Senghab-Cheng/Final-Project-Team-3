@@ -13,12 +13,21 @@ class ListEmployees {
         string list;
 
         void listAllEmployees() {
+                    //13          34                                26                        25
+            cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
+            cout << "| ID         | NAME                            | ROLE                    | SALARY                 |" << endl;
+            cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
+            
             for (int i = 0; i < employeeNames.size(); i++) {
-                cout << "Name : " << employeeNames[i] << endl;
-                cout << "ID : " << employeeIDs[i] << endl;
-                cout << "Role : " << employeeRoles[i] << endl;
-                cout << "Salary : " << employeeSalaries[i] << "$" << endl << endl; 
+
+                cout << "| " << setw(10) << left << employeeIDs[i]
+                << "| " << setw(33) << left << employeeNames[i]
+                << "| " << setw(25) << left << employeeRoles[i]
+                << "| " << right << fixed << setprecision(2) << employeeSalaries[i] << "$" << setw(15) << " |" << endl;
             }
+            cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
+            cout << "Employee " << employeeIDs.size() << endl;
+
         }
 
         void listEmployeeByPart() {
@@ -26,14 +35,24 @@ class ListEmployees {
             cin.ignore();
             getline(cin, this->list);
 
+            int count = 0;
+            bool isFound = 0;
+            cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
+            cout << "| ID         | NAME                            | ROLE                    | SALARY                 |" << endl;
+            cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
             for (int i = 0; i < employeeNames.size(); i++) {
                 if (list == employeeRoles[i]) {
-                    cout << "Name : " << employeeNames[i] << endl;
-                    cout << "ID : " << employeeIDs[i] << endl;
-                    cout << "Role : " << employeeRoles[i] << endl;
-                    cout << "Salary : " << employeeSalaries[i] << "$" << endl << endl; 
+                    count++;
+                    isFound = 1;
+                    cout << "| " << setw(10) << left << employeeIDs[i]
+                    << "| " << setw(33) << left << employeeNames[i]
+                    << "| " << setw(25) << left << employeeRoles[i]
+                    << "| " << right << fixed << setprecision(2) << employeeSalaries[i] << "$" << setw(15) << " |" << endl;       
                 }
             } 
+            cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
+            if (isFound) cout << list << " " << count << endl;
+            else cout << list << " not found." << endl;
         }
 
         void listMenu() {

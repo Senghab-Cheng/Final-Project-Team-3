@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 
 #include "Login.h"
 #include "AddEmployee.h"
@@ -45,14 +46,16 @@ void ui() {
         system("cls");
         // AddEmployee employee1;
         // employee1.setEmployeeData();
-        // SearchEmployee employee1a;
-        // employee1a.searchEmployee(); 
+        DeleteEmployee employee1c;
+        employee1c.manage(); 
+        
+        SearchEmployee employee1a;
+        employee1a.searchEmployee();
 
-        ListEmployees employee1b;
-        employee1b.listRoles();   
-        //employee1b.listEmployee();
-             
-         
+
+        // ListEmployees employee1b;
+        // //employee1b.listRoles();   
+        // employee1b.listEmployee();
     }
 }
 
