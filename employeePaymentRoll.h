@@ -37,7 +37,7 @@ public:
     }
 };
 
-int main() {
+void test() {
     string empName;
     double salary;
     int days, overtime;
@@ -64,5 +64,4 @@ int main() {
    
     emp1.displaySalary();
 
-    return 0;
 }

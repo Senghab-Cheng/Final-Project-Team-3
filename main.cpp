@@ -1,12 +1,13 @@
 #include <iostream>
 #include <string>
 
-#include "Login.h"
-#include "AddEmployee.h"
-#include "SearchEmployee.h"
+#include "login.h"
+#include "addEmployee.h"
+#include "searchEmployee.h"
 #include "DeleteEmployee.h"
-#include "Update.h"
-#include "ListEmployee.h"
+#include "update.h"
+#include "listEmployee.h"
+#include "employeePaymentRoll.h"
 
 using namespace std;
 
@@ -49,7 +50,7 @@ void ui() {
 
         ListEmployees employee1b;
         employee1b.listRoles();   
-        //employee1b.listEmployee();
+        employee1b.listEmployee();
              
          
     }
