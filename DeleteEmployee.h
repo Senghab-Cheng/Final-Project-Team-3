@@ -3,6 +3,7 @@
 #include <iostream>
 #include <algorithm>
 #include <limits>
+#include "ListEmployee.h"
 #include "AddEmployee.h"
 #include "BackupEmployee.h"
 #include "loadingBar.h"
@@ -21,7 +22,7 @@ public:
     void manage() {
         short option;
         do {
-            listForDelete();
+            // listForDelete();
             cout << "[+] Enter your option: ";
             cin >> option;
             //getLoadingBar(); // LoadingBar
@@ -95,28 +96,5 @@ private:
         } else {
             cout << "Employee with username \"" << username << "\" not found." << endl;
         }
-    }
-
-    void manage() {
-        short option;
-        do {
-            cout << "Select an option" << endl;
-            cout << "1. Delete Employee by ID" << endl;
-            cout << "2. Delete Employee by Username" << endl;
-            cout << "[+] Enter your option here: ";
-            cin >> option;
-
-            switch (option) {
-                case 1:
-                    deleteEmployeeById();
-                    break;
-                case 2:
-                    deleteEmployeeByUsername();
-                    break;
-                default:
-                    cout << "Invalid option." << endl;
-                    break;
-            }
-        } while (option != 0);
     }
 };
