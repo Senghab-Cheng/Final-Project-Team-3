@@ -5,10 +5,10 @@
 
 using namespace std;
 
-vector<string> employeeNames;
-vector<double> employeeSalaries;
-vector<int> employeeIDs;
-vector<string> employeeRoles;
+vector<string> employeeNames {"Senghab Cheng", "Pech Rattanakmony", "Thouern Chanthat", "Phorn Sotheara", "Ey Channim", "Chheng Panharath"};
+vector<double> employeeSalaries {2300.5, 2200.75, 3100.25, 2575.25, 2785.75, 2200.5};
+vector<int> employeeIDs {1, 2, 3, 4, 5, 6};
+vector<string> employeeRoles {"Manager", "Manager", "Cyber Security", "Cyber Security", "Developer", "Developer"};
 
 class AddEmployee{
     private :

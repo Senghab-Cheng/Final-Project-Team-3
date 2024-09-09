@@ -2,23 +2,24 @@
 
 #include <iostream>
 #include <vector>
-#include "addEmployee.h"
-#include "userInfo.h"
+#include "AddEmployee.h"
+#include "AdminInfo.h"
 
 using namespace std;
 
 class Update{
-    public : 
+    private :
             void updateSalary(){
                 int id;
                 cout << "[+] Enter employee's id : ";
                 cin >> id;
                 for (int i=0; i<employeeIDs.size(); i++){
                     if(id == employeeIDs[i]){
-                        cout << "[+] Enter new salary : ";
+                        cout << "[+] Enter employee's new salary : ";
                         cin >> employeeSalaries[i];
+                        cout << "Employee with ID " << id << " updated successfully." << endl;
                     }else{
-                        cout << "This Id not found...";
+                        cout << "Employee with ID " << id << "is not found.";
                     }
                 }
             }
@@ -29,17 +30,22 @@ class Update{
                 cin >> id;
                 for (int i=0; i<employeeIDs.size(); i++){
                     if(id == employeeIDs[i]){
-                        cout << "[+] Enter new role : ";
+                        cout << "[+] Enter employee's new role : ";
                         cin >> employeeRoles[i];
+                        cout << "Employee with ID " << id << " updated successfully." << endl;
+                        break;
                     }else{
-                        cout << "This Id not found...";
+                        cout << "Employee with ID " << id << "is not found.";
                     }
                 }
             } 
 
+    public : 
+            
             void update(){
                 short option;
              do{
+             //int option;
              cout << "Select one to update" << endl;
              cout << "1.Update Salary" << endl;
              cout << "2.Update Role" << endl;
