@@ -15,6 +15,8 @@ void ui() {
     if (admin1.userLogin()) {
         AddEmployee employee1;
         employee1.setEmployeeData();
+        DeleteEmployee deleter(employeeNames, employeeSalaries, employeeIDs, employeeRoles);
+        deleter.manage();
     }
 }
 

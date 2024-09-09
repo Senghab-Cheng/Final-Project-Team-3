@@ -65,6 +65,7 @@ class DeleteEmployee {
             cin >> option;
 
             switch (option) {
+                char confirm;
                 case 1:
                     deleteEmployeeById();
                     break;
