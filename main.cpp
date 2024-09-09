@@ -59,17 +59,90 @@ void adminMenu() {
 }
 
 void ui() {
-    Login admin1;
-    if (admin1.userLogin()) {
-        AddEmployee employee1;
-        employee1.setEmployeeData();
-    }
+    short op;
+    do {
+    listForAdminOrEmployee();
+        cout << "[+] Enter your option : "; cin >> op;
+        switch(op) {
+
+            // Admin
+            case 1 : {
+                //getLoadingBar();
+                system("cls");
+                Login admin1;
+                if (admin1.userLogin()) {
+                    system("cls");
+                    short option;
+                    do {
+                        adminMenu();
+                        cout << "[+] Enter your option : "; cin >> option;
+                        switch(option) {
+                            case 1 : {
+                                ListEmployees employee1a;
+                                employee1a.listEmployee();
+                                break;
+                            }
+                            case 2 : {
+                                // check attendance employees
+                                break;
+                            }
+                            case 3 : {
+                                // paymentroll employee
+                                break;
+                            }
+                            case 4 : {
+                                Manipulate employee1d;
+                                employee1d.manipulate();
+                                break;
+                            }
+                            case 5 : {
+                                SearchEmployee employee1e;
+                                employee1e.searchEmployee();
+                                break;
+                            }
+                            case 6 : {
+                                // profile - management
+                                break;
+                            }
+                            case 0 : {
+                                cout << "Exting..." << endl;
+                                break;
+                            }
+                            default : {
+                                cout << "INVALID OPTION!" << endl;
+                                break;
+                            }
+                        }
+                    }while(option);
+                } 
+                break;
+            }
+            
+            // Employee
+            case 2 : {
+                // checkIn, checkOut
+                Employee employee1;
+                employee1.checkInCheckOut();
+                
+                break;
+            }
+            case 0 : {
+                cout << "Exiting..." << endl;
+                break;
+            }
+            default : {
+                cout << "INVALID OPTION!" << endl;
+                break;
+            }
+        }
+    }while(op);  
 }
+  
 
 int main() {
     system("cls");
 
     ui();
-    system("pause");
+
     return 0;
 }
