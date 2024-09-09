@@ -70,6 +70,6 @@ int main() {
     system("cls");
 
     ui();
-
+    system("pause");
     return 0;
 }
