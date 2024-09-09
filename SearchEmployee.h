@@ -60,7 +60,7 @@ private:
         // Check if input is a single character
         if (employeeName.length() == 1) {
             char employeeNameLetter = employeeName[0]; // the single character input
-            getLoadingBar();
+            //getLoadingBar();
             system("cls");
             cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
             cout << "| ID         | NAME                            | ROLE                    | SALARY                 |" << endl;
@@ -89,7 +89,7 @@ private:
         }
         // If the input is more than one character (full or partial name)
         else {
-            getLoadingBar();
+            //getLoadingBar();
             system("cls");
             cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
             cout << "| ID         | NAME                            | ROLE                    | SALARY                 |" << endl;

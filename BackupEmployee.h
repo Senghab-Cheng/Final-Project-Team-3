@@ -38,7 +38,7 @@ private:
         char choice;
         cout << "Are you sure you want to empty backup data? [Y/N] : ";
         cin >> choice;
-        getLoadingBar(); // LoadingBar
+        //getLoadingBar(); // LoadingBar
         if (choice == 'y' || choice == 'Y') {
             if (employeeIDsBackupX.empty()) {
                 cout << "No backup data available." << endl;
@@ -59,7 +59,7 @@ private:
         int id;
         cout << "[+] Enter the employee ID to restore the data: ";
         cin >> id;
-        getLoadingBar(); // LoadingBar
+        //getLoadingBar(); // LoadingBar
 
         if (employeeIDsBackupX.empty()) {
             cout << "No backup data available." << endl;

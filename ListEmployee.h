@@ -36,7 +36,7 @@ private:
         cout << "Enter employees department : ";
         cin.ignore();
         getline(cin, this->list);
-        getLoadingBar(); // loading bar
+        //getLoadingBar(); // loading bar
         system("cls");
         int count = 0;
         bool isFound = 0;
@@ -91,7 +91,7 @@ public:
                 break;
             }
             case 2: {
-                getLoadingBar();
+                //getLoadingBar();
                 system("cls");
                 listAllEmployees();
                 break;

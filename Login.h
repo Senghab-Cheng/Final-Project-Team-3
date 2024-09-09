@@ -25,7 +25,7 @@ class Login{
             cout << "[+] Enter your Password : ";
             getline(cin, this->password);
             
-            getLoadingBar();
+            //getLoadingBar();
             Admin admin1;
             if ((this->usernameOrEmail == admin1.getUsername() || this->usernameOrEmail == admin1.getEmail()) && this->password == admin1.getPassword()) {
                 return 1;

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <ctime>
 
 #include "Login.h"
 #include "SearchEmployee.h"
@@ -11,6 +12,7 @@
 #include "DeleteEmployee.h"
 #include "EmployeeManagement.h"
 #include "loadingBar.h"
+#include "Employee.h"
 
 using namespace std;
 
@@ -65,7 +67,7 @@ void ui() {
 
             // Admin
             case 1 : {
-                getLoadingBar();
+                //getLoadingBar();
                 system("cls");
                 Login admin1;
                 if (admin1.userLogin()) {
@@ -113,11 +115,15 @@ void ui() {
                         }
                     }while(option);
                 } 
+                break;
             }
             
             // Employee
             case 2 : {
                 // checkIn, checkOut
+                Employee employee1;
+                employee1.checkInCheckOut();
+                
                 break;
             }
             case 0 : {

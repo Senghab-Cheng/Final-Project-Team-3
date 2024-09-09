@@ -24,7 +24,7 @@ public:
             listForDelete();
             cout << "[+] Enter your option: ";
             cin >> option;
-            getLoadingBar(); // LoadingBar
+            //getLoadingBar(); // LoadingBar
 
             switch (option) {
             case 1:
@@ -48,7 +48,7 @@ private:
         int id;
         cout << "[+] Enter employee ID to delete: ";
         cin >> id;
-        getLoadingBar(); // LoadingBar
+        //getLoadingBar(); // LoadingBar
 
         auto itID = find(employeeIDs.begin(), employeeIDs.end(), id);
         if (itID != employeeIDs.end()) {
@@ -75,7 +75,7 @@ private:
         cout << "[+] Enter employee Username to delete: ";
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         getline(cin, username);
-        getLoadingBar(); // LoadingBar
+        //getLoadingBar(); // LoadingBar
 
         auto itName = find(employeeNames.begin(), employeeNames.end(), username);
         if (itName != employeeNames.end()) {
