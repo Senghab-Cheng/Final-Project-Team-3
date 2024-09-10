@@ -21,7 +21,7 @@ class Manipulate{
             cout << "|  [2]  =>  Update Existing Employee                                        |" << endl;
             cout << "|  [3]  =>  Remove Employee                                                 |" << endl;
             cout << "|  [4]  =>  Backup Employee Records                                         |" << endl;
-            cout << "|  [0]  =>  Exit to Main Menu                                               |" << endl;
+            cout << "|  [0]  =>  Exit                                                            |" << endl;
             cout << "|                                                                           |" << endl;
             cout << "+===========================================================================+" << endl;
             cout << "|           >>>  Please choose an option by entering a number  <<<          |" << endl;

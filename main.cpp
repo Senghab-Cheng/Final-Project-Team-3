@@ -46,10 +46,9 @@ void adminMenu() {
     cout << "|                                                                           |" << endl;
     cout << "|  [1]  =>  View Employee List                                              |" << endl;
     cout << "|  [2]  =>  Employee Attendance Tracking                                    |" << endl;
-    cout << "|  [3]  =>  Employee Payroll Management                                     |" << endl;
-    cout << "|  [4]  =>  Employee Management                                             |" << endl;
-    cout << "|  [5]  =>  Search for Employees                                            |" << endl;
-    cout << "|  [6]  =>  Admin Profile Settings                                          |" << endl;
+    cout << "|  [3]  =>  Employee Management                                             |" << endl;
+    cout << "|  [4]  =>  Search for Employees                                            |" << endl;
+    cout << "|  [5]  =>  Admin Profile Settings                                          |" << endl;
     cout << "|  [0]  =>  Exit to Main Menu                                               |" << endl;
     cout << "|                                                                           |" << endl;
     cout << "+===========================================================================+" << endl;
@@ -87,21 +86,18 @@ void ui() {
                                 break;
                             }
                             case 3 : {
-                                // paymentroll employee
-                                break;
-                            }
-                            case 4 : {
                                 Manipulate employee1d;
                                 employee1d.manipulate();
                                 break;
                             }
-                            case 5 : {
+                            case 4 : {
                                 SearchEmployee employee1e;
                                 employee1e.searchEmployee();
                                 break;
                             }
-                            case 6 : {
-                                // profile - management
+                            case 5 : {
+                                ProfileSetting p1;
+                                p1.profileSettings();
                                 break;
                             }
                             case 0 : {
@@ -143,6 +139,6 @@ int main() {
     system("cls");
 
     ui();
-    system("pause");
+    //system("pause");
     return 0;
 }
