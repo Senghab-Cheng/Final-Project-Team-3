@@ -119,7 +119,6 @@ void ui() {
                 // checkIn, checkOut
                 Employee employee1;
                 employee1.checkInCheckOut();
-                
                 break;
             }
             case 0 : {
@@ -132,13 +131,12 @@ void ui() {
             }
         }
     }while(op);  
-}
-  
+}  
 
 int main() {
     system("cls");
 
     ui();
-    //system("pause");
+
     return 0;
 }

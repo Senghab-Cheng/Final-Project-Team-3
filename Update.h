@@ -22,12 +22,12 @@ private:
 
     void updateSalary() {
         int id;
-        cout << "[+] Enter employee's ID: ";
+        cout << "[+] Enter employee ID: ";
         cin >> id;
         
         int index = findEmployeeIndexById(id);
         if (index != -1) {
-            cout << "[+] Enter employee's new salary: ";
+            cout << "[+] Enter employee new Salary: ";
             cin >> employeeSalaries[index];
             cout << "Employee with ID " << id << " updated successfully." << endl;
         } else {
@@ -37,12 +37,12 @@ private:
 
     void updateRole() {
         int id;
-        cout << "[+] Enter employee's ID: ";
+        cout << "[+] Enter employee ID: ";
         cin >> id;
 
         int index = findEmployeeIndexById(id);
         if (index != -1) {
-            cout << "[+] Enter employee's new role: ";
+            cout << "[+] Enter employee new Position: ";
             cin >> employeeRoles[index];
             cout << "Employee with ID " << id << " updated successfully." << endl;
         } else {
@@ -50,14 +50,27 @@ private:
         }
     }
 
+    void listForUpdate() {
+        cout << "+==============================================================================+" << endl;
+        cout << "|                                                                              |" << endl;
+        cout << "|                            >>>  SEARCH EMPLOYEE  <<<                         |" << endl;
+        cout << "|                                                                              |" << endl;
+        cout << "+==============================================================================+" << endl;
+        cout << "|                                                                              |" << endl;
+        cout << "|  [1]  =>  Update Salary                                                      |" << endl;
+        cout << "|  [2]  =>  Update Position                                                    |" << endl;
+        cout << "|  [0]  =>  Exit                                                               |" << endl;
+        cout << "|                                                                              |" << endl;
+        cout << "+==============================================================================+" << endl;
+        cout << "|                 >>>  Select an option by entering the number  <<<            |" << endl;
+        cout << "+==============================================================================+" << endl;  
+    }
+
 public:
     void update() {
         short option;
         do {
-            cout << "Select an option to update:" << endl;
-            cout << "1. Update Salary" << endl;
-            cout << "2. Update Role" << endl;
-            cout << "0. Exit" << endl;
+            listForUpdate();
             cout << "[+] Enter your option: ";
             cin >> option;
 
@@ -79,6 +92,6 @@ public:
                     break;
                 }
             }
-        } while (option != 0);
+        } while (option);
     }
 };
