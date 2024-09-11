@@ -12,7 +12,8 @@
 #include "DeleteEmployee.h"
 #include "EmployeeManagement.h"
 #include "loadingBar.h"
-#include "Employee.h"
+#include "Employee_AttendanceTracker.h"
+#include "QR.h"
 
 using namespace std;
 

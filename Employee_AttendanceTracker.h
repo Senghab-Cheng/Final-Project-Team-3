@@ -5,6 +5,7 @@
 #include <ctime>
 #include "AddEmployee.h"
 #include "loadingBar.h"
+#include "QR.h"
 
 using namespace std;
 
@@ -50,25 +51,28 @@ class Employee{
             cout << "|                              >>>  CHECK-IN  <<<                              |" << endl;
             cout << "|                                                                              |" << endl;
             cout << "+==============================================================================+" << endl;
-            cout << "[+] Enter your ID to check-in : ";
-            cin >> this->id;
+            // cout << "[+] Enter your ID to check-in : ";
+            // cin >> this->id;
 
-            auto it = find(employeeIDs.begin(), employeeIDs.end(), id);
-            if (it != employeeIDs.end()) {
-                size_t index = distance(employeeIDs.begin(), it);
-                //getLoadingBar();
-                system("cls");
-                cout << "+------------+---------------------------------+-------------------------+" << endl;
-                cout << "| ID         | NAME                            | ROLE                    |" << endl;
-                cout << "+------------+---------------------------------+-------------------------+" << endl;
-                cout << "| " << setw(10) << left << employeeIDs[index]
-                    << " | " << setw(32) << left << employeeNames[index]
-                    << "| " << setw(23) << left << employeeRoles[index]
-                    << " | "<< endl;
-                cout << "+------------+---------------------------------+-------------------------+" << endl;
-                cout << "Checked In successfully : ";
-                getCurrentTime();
-            }
+            // auto it = find(employeeIDs.begin(), employeeIDs.end(), id);
+            // if (it != employeeIDs.end()) {
+            //     size_t index = distance(employeeIDs.begin(), it);
+            //     //getLoadingBar();
+            //     system("cls");
+            //     cout << "+------------+---------------------------------+-------------------------+" << endl;
+            //     cout << "| ID         | NAME                            | ROLE                    |" << endl;
+            //     cout << "+------------+---------------------------------+-------------------------+" << endl;
+            //     cout << "| " << setw(10) << left << employeeIDs[index]
+            //         << " | " << setw(32) << left << employeeNames[index]
+            //         << "| " << setw(23) << left << employeeRoles[index]
+            //         << " | "<< endl;
+            //     cout << "+------------+---------------------------------+-------------------------+" << endl;
+            //     cout << "Checked In successfully : ";
+            //     getCurrentTime();
+            //}
+            string SERVER_URL = "http://192.168.0.173:5466/checkin";  // Check-in URL
+            string command = "curl qrenco.de/" + SERVER_URL;
+            system(command.c_str());
         }
 
         void checkOut() {
@@ -77,25 +81,28 @@ class Employee{
             cout << "|                             >>>  CHECK-OUT  <<<                              |" << endl;
             cout << "|                                                                              |" << endl;
             cout << "+==============================================================================+" << endl;
-            cout << "[+] Enter your ID to check-in : ";
-            cin >> this->id;
+            // cout << "[+] Enter your ID to check-in : ";
+            // cin >> this->id;
 
-            auto it = find(employeeIDs.begin(), employeeIDs.end(), id);
-            if (it != employeeIDs.end()) {
-                size_t index = distance(employeeIDs.begin(), it);
-                //getLoadingBar();
-                system("cls");
-                cout << "+------------+---------------------------------+-------------------------+" << endl;
-                cout << "| ID         | NAME                            | ROLE                    |" << endl;
-                cout << "+------------+---------------------------------+-------------------------+" << endl;
-                cout << "| " << setw(10) << left << employeeIDs[index]
-                    << "| " << setw(33) << left << employeeNames[index]
-                    << "| " << setw(25) << left << employeeRoles[index]
-                    << "| "<< endl;
-                cout << "+------------+---------------------------------+-------------------------+" << endl;
-                cout << "Checked Out successfully : ";
-                getCurrentTime();
-            }
+            // auto it = find(employeeIDs.begin(), employeeIDs.end(), id);
+            // if (it != employeeIDs.end()) {
+            //     size_t index = distance(employeeIDs.begin(), it);
+            //     //getLoadingBar();
+            //     system("cls");
+            //     cout << "+------------+---------------------------------+-------------------------+" << endl;
+            //     cout << "| ID         | NAME                            | ROLE                    |" << endl;
+            //     cout << "+------------+---------------------------------+-------------------------+" << endl;
+            //     cout << "| " << setw(10) << left << employeeIDs[index]
+            //         << "| " << setw(33) << left << employeeNames[index]
+            //         << "| " << setw(25) << left << employeeRoles[index]
+            //         << "| "<< endl;
+            //     cout << "+------------+---------------------------------+-------------------------+" << endl;
+            //     cout << "Checked Out successfully : ";
+            //     getCurrentTime();
+            // }
+            string SERVER_URL = "http://192.168.0.173:5466/checkout";  // Check-out URL
+            string command = "curl qrenco.de/" + SERVER_URL;
+            system(command.c_str());
         }
 
     public :
