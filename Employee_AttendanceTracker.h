@@ -70,7 +70,7 @@ class Employee{
             //     cout << "Checked In successfully : ";
             //     getCurrentTime();
             //}
-            string SERVER_URL = "http://192.168.0.173:5466/checkin";  // Check-in URL
+            string SERVER_URL = "http://192.168.1.232:5466/checkin";  // Check-in URL
             string command = "curl qrenco.de/" + SERVER_URL;
             system(command.c_str());
         }
@@ -100,7 +100,7 @@ class Employee{
             //     cout << "Checked Out successfully : ";
             //     getCurrentTime();
             // }
-            string SERVER_URL = "http://192.168.0.173:5466/checkout";  // Check-out URL
+            string SERVER_URL = "http://192.168.1.232:5466/checkout";  // Check-out URL
             string command = "curl qrenco.de/" + SERVER_URL;
             system(command.c_str());
         }
