@@ -28,7 +28,25 @@ private:
                 << "| " << right << fixed << setprecision(2) << employeeSalaries[i] << "$" << setw(15) << " |" << endl;
         }
         cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
-        cout << "Employee " << employeeIDs.size() << endl;
+        
+        vector<string> roles = employeeRoles; // pass values of employeeRoles to roles
+        sort(roles.begin(), roles.end());
+        auto it = unique(roles.begin(), roles.end());
+        roles.erase(it, roles.end());
+
+        int count = 0;
+        cout << "Department : " << endl;
+        for (int i = 0; i < roles.size(); i++) {
+            cout << roles[i];
+            for (int j = 0; j < employeeRoles.size(); j++) {
+                if (employeeRoles[j] == roles[i]) {
+                    count++;
+                }
+            }
+            cout << " " << count << endl;
+            count = 0;
+        }
+        cout << endl << "Employee : " << employeeRoles.size() << endl;
 
     }
 
@@ -76,9 +94,40 @@ private:
         cout << "+==============================================================================+" << endl;
     }
 
+    void department() {
+        ifstream department("department.txt"); // Open the file for reading
+
+        if(department.is_open()) {
+            string line;
+            // Read line by line from the file
+            while(getline(department, line)) {
+                cout << line << endl; // Print each line to the console
+                this_thread::sleep_for(chrono::milliseconds(80)); // Delay of 100 milliseconds
+            }
+            department.close(); // Close the file
+        } else {
+            cout << "Unable to open the file!" << endl;
+        }
+    }
+
+    void allEmployees() {
+        ifstream allEmployees("allEmployee.txt"); // Open the file for reading
+
+        if(allEmployees.is_open()) {
+            string line;
+            // Read line by line from the file
+            while(getline(allEmployees, line)) {
+                cout << line << endl; // Print each line to the console
+                this_thread::sleep_for(chrono::milliseconds(80)); // Delay of 100 milliseconds
+            }
+            allEmployees.close(); // Close the file
+        } else {
+            cout << "Unable to open the file!" << endl;
+        }  
+    }
+
 public:
 
-    
     void listEmployee() {
         short op;
         do {
@@ -86,13 +135,17 @@ public:
             cout << "[+] Enter your option : "; cin >> op;
             switch (op) {
             case 1: {
+                //getLoadingBar();
                 //system("cls");
+                department();
+                listRoles();
                 listEmployeeByPart();
                 break;
             }
             case 2: {
                 //getLoadingBar();
                 system("cls");
+                allEmployees();
                 listAllEmployees();
                 break;
             }
@@ -114,17 +167,18 @@ public:
         auto it = unique(roles.begin(), roles.end());
         roles.erase(it, roles.end());
 
-        int count = 0;
-        cout << "Role : " << endl;
+        //int count = 0;
+        cout << "Department : ";
         for (int i = 0; i < roles.size(); i++) {
             cout << roles[i];
-            for (int j = 0; j < employeeRoles.size(); j++) {
-                if (employeeRoles[j] == roles[i]) {
-                    count++;
-                }
-            }
-            cout << "\t\t" << count << endl;
-            count = 0;
+            if (i != roles.size()-1) cout << ", ";
+            // for (int j = 0; j < employeeRoles.size(); j++) {
+            //     if (employeeRoles[j] == roles[i]) {
+            //         count++;
+            //     }
+            // }
+            // cout << count << endl;
+            // count = 0;
         }
         cout << endl << "Employee : " << employeeRoles.size() << endl;
     }

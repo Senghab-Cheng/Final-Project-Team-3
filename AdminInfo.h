@@ -71,7 +71,7 @@ class ProfileSetting : public Admin {
             cout << "|                                                                           |" << endl;
             cout << "|                         | Admin Profile Settings |                        |" << endl;
             cout << "|                                                                           |" << endl;
-            cout << "+============================================================================+" << endl;
+            cout << "+===========================================================================+" << endl;
             cout << "|                                                                           |" << endl;
             cout << "|  [1]  =>  Show Admin Informations                                         |" << endl;
             cout << "|  [2]  =>  Account Settings                                                |" << endl;
@@ -215,6 +215,10 @@ class ProfileSetting : public Admin {
                 }
                 case 6 : {
                     updateGitHub();
+                    break;
+                }
+                case 7 : {
+                    updateBio();
                     break;
                 }
                 case 0 : {

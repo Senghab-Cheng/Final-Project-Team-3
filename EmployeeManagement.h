@@ -28,6 +28,22 @@ class Manipulate{
             cout << "+===========================================================================+" << endl;
         }
 
+        void addEmployee() {
+            ifstream addEmployee("addNewEmployee.txt"); // Open the file for reading
+
+            if(addEmployee.is_open()) {
+                string line;
+                // Read line by line from the file
+                while(getline(addEmployee, line)) {
+                    cout << line << endl; // Print each line to the console
+                    this_thread::sleep_for(chrono::milliseconds(80)); // Delay of 100 milliseconds
+                }
+                addEmployee.close(); // Close the file
+            } else {
+                cout << "Unable to open the file!" << endl;
+            }
+        }
+
     public :
         void manipulate() {
             short option;

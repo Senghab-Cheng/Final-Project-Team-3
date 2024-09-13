@@ -12,8 +12,25 @@ using namespace std;
 class Employee{
     private :
         int id;
+
+        void employeePanel() {
+            ifstream employeePanel("employeePanel.txt"); // Open the file for reading
+
+            if(employeePanel.is_open()) {
+                string line;
+                // Read line by line from the file
+                while(getline(employeePanel, line)) {
+                    cout << line << endl; // Print each line to the console
+                    this_thread::sleep_for(chrono::milliseconds(80)); // Delay of 100 milliseconds
+                }
+                employeePanel.close(); // Close the file
+            } else {
+                cout << "Unable to open the file!" << endl;
+            }
+        }
         
         void list() {
+            employeePanel();
             cout << "+==============================================================================+" << endl;
             cout << "|                                                                              |" << endl;
             cout << "|                            >>>  EMPLOYEE PANEL  <<<                          |" << endl;
@@ -45,7 +62,40 @@ class Employee{
                       << localTime->tm_sec << endl;
         }
 
+        void checkInStyle() {
+            ifstream checkInStyle("checkIn.txt"); // Open the file for reading
+
+            if(checkInStyle.is_open()) {
+                string line;
+                // Read line by line from the file
+                while(getline(checkInStyle, line)) {
+                    cout << line << endl; // Print each line to the console
+                    this_thread::sleep_for(chrono::milliseconds(80)); // Delay of 100 milliseconds
+                }
+                checkInStyle.close(); // Close the file
+            } else {
+                cout << "Unable to open the file!" << endl;
+            } 
+        }
+
+        void checkOutStyle() {
+            ifstream checkOutStyle("checkOut.txt"); // Open the file for reading
+
+            if(checkOutStyle.is_open()) {
+                string line;
+                // Read line by line from the file
+                while(getline(checkOutStyle, line)) {
+                    cout << line << endl; // Print each line to the console
+                    this_thread::sleep_for(chrono::milliseconds(80)); // Delay of 100 milliseconds
+                }
+                checkOutStyle.close(); // Close the file
+            } else {
+                cout << "Unable to open the file!" << endl;
+            }
+        }
+
         void checkIn() {
+            checkInStyle();
             cout << "+==============================================================================+" << endl;
             cout << "|                                                                              |" << endl;
             cout << "|                              >>>  CHECK-IN  <<<                              |" << endl;
@@ -70,12 +120,15 @@ class Employee{
             //     cout << "Checked In successfully : ";
             //     getCurrentTime();
             //}
-            string SERVER_URL = "http://192.168.1.232:5466/checkin";  // Check-in URL
+
+            //getLoadingBar();
+            string SERVER_URL = "http://192.168.29.98:5466/checkin";  // Check-in URL
             string command = "curl qrenco.de/" + SERVER_URL;
             system(command.c_str());
         }
 
         void checkOut() {
+            checkOutStyle();
             cout << "+==============================================================================+" << endl;
             cout << "|                                                                              |" << endl;
             cout << "|                             >>>  CHECK-OUT  <<<                              |" << endl;
@@ -100,7 +153,9 @@ class Employee{
             //     cout << "Checked Out successfully : ";
             //     getCurrentTime();
             // }
-            string SERVER_URL = "http://192.168.1.232:5466/checkout";  // Check-out URL
+
+            //getLoadingBar();
+            string SERVER_URL = "http://192.168.29.98:5466/checkout";  // Check-out URL
             string command = "curl qrenco.de/" + SERVER_URL;
             system(command.c_str());
         }
@@ -113,15 +168,19 @@ class Employee{
                 cout << "[+] Enter your option : "; cin >> option;
                 switch(option) {
                     case 1 : {
+                        system("cls");
                         checkIn();
                         break;
                     }
                     case 2 : {
+                        system("cls");
                         checkOut();
                         break;
                     }
                     case 0 : {
                         cout << "Exiting..." << endl;
+                        //getLoadingBar();
+                        system("cls");
                         break;
                     }
                     default : {

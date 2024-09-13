@@ -126,6 +126,7 @@ private:
         auto it = find(employeeIDs.begin(), employeeIDs.end(), id);
         if (it != employeeIDs.end()) {
             size_t index = distance(employeeIDs.begin(), it);
+            cin.ignore();
             getLoadingBar();
             system("cls");
             cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
