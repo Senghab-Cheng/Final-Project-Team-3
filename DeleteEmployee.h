@@ -20,6 +20,7 @@ class DeleteEmployee {
 
 public:
     void manage() {
+        loadEmployeeData(); // Load data from files before managing deletions
         short option;
         do {
             listForDelete();
@@ -27,23 +28,58 @@ public:
             cin >> option;
 
             switch (option) {
-            case 1:
-                deleteEmployeeById();
-                break;
-            case 2:
-                deleteEmployeeByUsername();
-                break;
-            case 0:
-                cout << "Exiting..." << endl;
-                break;
-            default:
-                cout << "INVALID OPTION!" << endl;
-                break;
+                case 1:
+                    deleteEmployeeById();
+                    break;
+                case 2:
+                    deleteEmployeeByUsername();
+                    break;
+                case 0:
+                    cout << "Exiting..." << endl;
+                    break;
+                default:
+                    cout << "INVALID OPTION!" << endl;
+                    break;
             }
-        } while (option);
+        } while (option != 0);
     }
 
 private:
+    vector<string> employeeNames;
+    vector<int> employeeIDs;
+    vector<double> employeeSalaries;
+    vector<string> employeeRoles;
+
+    void loadEmployeeData() {
+        ifstream namesFile("data/employeeNameFile.txt");
+        ifstream idsFile("data/employeeIDFile.txt");
+        ifstream rolesFile("data/employeePositionFile.txt");
+        ifstream salariesFile("data/employeeSalaryFile.txt");
+
+        if (!namesFile.is_open() || !idsFile.is_open() || !rolesFile.is_open() || !salariesFile.is_open()) {
+            cerr << "Error: Unable to open one or more employee data files." << endl;
+            return;
+        }
+
+        string name;
+        int id;
+        string role;
+        double salary;
+
+        while (getline(namesFile, name) && idsFile >> id && getline(rolesFile, role) && salariesFile >> salary) {
+            employeeNames.push_back(name);
+            employeeIDs.push_back(id);
+            employeeRoles.push_back(role);
+            employeeSalaries.push_back(salary);
+            idsFile.ignore(); // Ignore the newline character after ID
+        }
+
+        namesFile.close();
+        idsFile.close();
+        rolesFile.close();
+        salariesFile.close();
+    }
+
     void deleteEmployeeById() {
         int id;
         cout << "[+] Enter employee ID to delete: ";

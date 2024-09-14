@@ -122,7 +122,7 @@ class Employee{
             //}
 
             //getLoadingBar();
-            string SERVER_URL = "http://192.168.29.98:5466/checkin";  // Check-in URL
+            string SERVER_URL = "http://192.168.4.184:5466/checkin";  // Check-in URL
             string command = "curl qrenco.de/" + SERVER_URL;
             system(command.c_str());
         }
@@ -155,7 +155,7 @@ class Employee{
             // }
 
             //getLoadingBar();
-            string SERVER_URL = "http://192.168.29.98:5466/checkout";  // Check-out URL
+            string SERVER_URL = "http://192.168.4.184:5466/checkout";  // Check-out URL
             string command = "curl qrenco.de/" + SERVER_URL;
             system(command.c_str());
         }
