@@ -3,6 +3,7 @@
 #include <iostream>
 #include <algorithm>
 #include <limits>
+#include <fstream>
 #include "AddEmployee.h"
 #include "BackupEmployee.h"
 #include "loadingBar.h"
@@ -24,7 +25,6 @@ public:
             listForDelete();
             cout << "[+] Enter your option: ";
             cin >> option;
-            //getLoadingBar(); // LoadingBar
 
             switch (option) {
             case 1:
@@ -48,21 +48,22 @@ private:
         int id;
         cout << "[+] Enter employee ID to delete: ";
         cin >> id;
-        //getLoadingBar(); // LoadingBar
 
         auto itID = find(employeeIDs.begin(), employeeIDs.end(), id);
         if (itID != employeeIDs.end()) {
             size_t index = distance(employeeIDs.begin(), itID);
 
-            employeeIDsBackupX.push_back(employeeIDs[index]);
-            employeeNamesBackupX.push_back(employeeNames[index]);
-            employeeRolesBackupX.push_back(employeeRoles[index]);
-            employeeSalariesBackupX.push_back(employeeSalaries[index]);
+            // Backup employee data to file before deleting
+            backupEmployeeToFile(index);
 
+            // Delete from vectors
             employeeIDs.erase(employeeIDs.begin() + index);
             employeeNames.erase(employeeNames.begin() + index);
             employeeSalaries.erase(employeeSalaries.begin() + index);
             employeeRoles.erase(employeeRoles.begin() + index);
+
+            // Save updated vectors to the files
+            updateEmployeeFiles();
 
             cout << "Employee with ID " << id << " deleted successfully." << endl;
         } else {
@@ -75,26 +76,78 @@ private:
         cout << "[+] Enter employee Username to delete: ";
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         getline(cin, username);
-        //getLoadingBar(); // LoadingBar
 
         auto itName = find(employeeNames.begin(), employeeNames.end(), username);
         if (itName != employeeNames.end()) {
             size_t index = distance(employeeNames.begin(), itName);
 
-            employeeIDsBackupX.push_back(employeeIDs[index]);
-            employeeNamesBackupX.push_back(employeeNames[index]);
-            employeeRolesBackupX.push_back(employeeRoles[index]);
-            employeeSalariesBackupX.push_back(employeeSalaries[index]);
+            // Backup employee data to file before deleting
+            backupEmployeeToFile(index);
 
+            // Delete from vectors
             employeeIDs.erase(employeeIDs.begin() + index);
             employeeNames.erase(employeeNames.begin() + index);
             employeeSalaries.erase(employeeSalaries.begin() + index);
             employeeRoles.erase(employeeRoles.begin() + index);
 
+            // Save updated vectors to the files
+            updateEmployeeFiles();
+
             cout << "Employee with username \"" << username << "\" deleted successfully." << endl;
         } else {
             cout << "Employee with username \"" << username << "\" not found." << endl;
         }
+    }
+
+    void backupEmployeeToFile(size_t index) {
+        ofstream nameFile("data/backupEmployeeNames.txt", ios::app);
+        ofstream idFile("data/backupEmployeeIDs.txt", ios::app);
+        ofstream salaryFile("data/backupEmployeeSalaries.txt", ios::app);
+        ofstream roleFile("data/backupEmployeeRoles.txt", ios::app);
+
+        if (nameFile.is_open() && idFile.is_open() && salaryFile.is_open() && roleFile.is_open()) {
+            nameFile << employeeNames[index] << '\n';
+            idFile << employeeIDs[index] << '\n';
+            salaryFile << employeeSalaries[index] << '\n';
+            roleFile << employeeRoles[index] << '\n';
+        } else {
+            cerr << "Error: Unable to open backup files for writing." << endl;
+        }
+
+        nameFile.close();
+        idFile.close();
+        salaryFile.close();
+        roleFile.close();
+    }
+
+    void updateEmployeeFiles() {
+        // Update employeeNameFile.txt
+        ofstream nameFile("data/employeeNameFile.txt");
+        for (const string& name : employeeNames) {
+            nameFile << name << '\n';
+        }
+        nameFile.close();
+
+        // Update employeeIDFile.txt
+        ofstream idFile("data/employeeIDFile.txt");
+        for (int id : employeeIDs) {
+            idFile << id << '\n';
+        }
+        idFile.close();
+
+        // Update employeeSalaryFile.txt
+        ofstream salaryFile("data/employeeSalaryFile.txt");
+        for (double salary : employeeSalaries) {
+            salaryFile << salary << '\n';
+        }
+        salaryFile.close();
+
+        // Update employeePositionFile.txt
+        ofstream roleFile("data/employeePositionFile.txt");
+        for (const string& role : employeeRoles) {
+            roleFile << role << '\n';
+        }
+        roleFile.close();
     }
 
     void listForDelete() {

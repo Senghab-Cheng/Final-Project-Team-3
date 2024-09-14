@@ -7,16 +7,21 @@
 #include "Login.h"
 #include "SearchEmployee.h"
 #include "ListEmployee.h"
-#include "AddEmployee.h"
+//#include "AddEmployee.h"
 #include "BackupEmployee.h"
-#include "Update.h"
-#include "DeleteEmployee.h"
+//#include "Update.h"
+//#include "DeleteEmployee.h"
 #include "EmployeeManagement.h"
 #include "loadingBar.h"
 #include "Employee_AttendanceTracker.h"
 //#include "QR.h"
 
 using namespace std;
+
+vector<string> employeeNames;
+vector<double> employeeSalaries;
+vector<int> employeeIDs;
+vector<string> employeeRoles;
 
 vector<string> employeeNamesBackupX;
 vector<string> employeeRolesBackupX;

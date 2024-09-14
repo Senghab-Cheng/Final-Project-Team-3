@@ -5,7 +5,7 @@
 #include <ctime>
 #include "AddEmployee.h"
 #include "loadingBar.h"
-#include "QR.h"
+//#include "QR.h"
 
 using namespace std;
 

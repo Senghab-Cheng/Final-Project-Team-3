@@ -3,6 +3,7 @@
 #include <iostream>
 #include <iomanip>  // For setw
 #include <string>
+#include <fstream>  // For file operations
 
 using namespace std;
 
@@ -16,64 +17,120 @@ class Admin {
         string telegram = "ABC";
         string gitHub = "abc123";
 
+        // Save updated information to file
+        void saveToFile() {
+            ofstream adminInfo("data/adminInfo.txt");
+            if (adminInfo.is_open()) {
+                adminInfo << "Username: " << username << endl;
+                adminInfo << "Email: " << email << endl;
+                adminInfo << "Password: " << password << endl;
+                adminInfo << "Bio: " << bio << endl;
+                adminInfo << "Tel: " << tel << endl;
+                adminInfo << "Telegram: " << telegram << endl;
+                adminInfo << "GitHub: " << gitHub << endl;
+                adminInfo.close();
+            } else {
+                cout << "Unable to open file for writing!" << endl;
+            }
+        }
+
+        // Load information from file
+        void loadFromFile() {
+            ifstream adminInfo("data/adminInfo.txt");
+            if (adminInfo.is_open()) {
+                string line;
+                while (getline(adminInfo, line)) {
+                    if (line.find("Username:") != string::npos) {
+                        username = line.substr(line.find(":") + 2);
+                    } else if (line.find("Email:") != string::npos) {
+                        email = line.substr(line.find(":") + 2);
+                    } else if (line.find("Password:") != string::npos) {
+                        password = line.substr(line.find(":") + 2);
+                    } else if (line.find("Bio:") != string::npos) {
+                        bio = line.substr(line.find(":") + 2);
+                    } else if (line.find("Tel:") != string::npos) {
+                        tel = line.substr(line.find(":") + 2);
+                    } else if (line.find("Telegram:") != string::npos) {
+                        telegram = line.substr(line.find(":") + 2);
+                    } else if (line.find("GitHub:") != string::npos) {
+                        gitHub = line.substr(line.find(":") + 2);
+                    }
+                }
+                adminInfo.close();
+            } else {
+                cout << "Unable to open file for reading!" << endl;
+            }
+        }
+
     public:
+        Admin() {
+            loadFromFile(); // Load data when object is created
+        }
+
         // Getters
-        string getUsername() {
+        string getUsername() const {
             return username;
         }
-        string getEmail() {
+        string getEmail() const {
             return email;
         }
-        string getPassword() {
+        string getPassword() const {
             return password;
         }
-        string getBio() {
+        string getBio() const {
             return bio;
         }
-        string getTel() {
+        string getTel() const {
             return tel;
         }
-        string getTelegram() {
+        string getTelegram() const {
             return telegram;
         }
-        string getGitHub() {
+        string getGitHub() const {
             return gitHub;
         }
 
         // Setters
         void setUsername(const string& newUsername) {
             username = newUsername;
+            saveToFile();  // Save to file after updating
         }
         void setEmail(const string& newEmail) {
             email = newEmail;
+            saveToFile();  // Save to file after updating
         }
         void setPassword(const string& newPassword) {
             password = newPassword;
+            saveToFile();  // Save to file after updating
         }
         void setBio(const string& newBio) {
             bio = newBio;
+            saveToFile();  // Save to file after updating
         }
         void setTel(const string& newTel) {
             tel = newTel;
+            saveToFile();  // Save to file after updating
         }
         void setTelegram(const string& newTelegram) {
             telegram = newTelegram;
+            saveToFile();  // Save to file after updating
         }
         void setGitHub(const string& newGitHub) {
             gitHub = newGitHub;
+            saveToFile();  // Save to file after updating
         }
 };
 
 class ProfileSetting : public Admin {
-    private :
-        void listUpdateOrShowDetials() {
+    private:
+        void listUpdateOrShowDetails() {
             cout << "+===========================================================================+" << endl;
             cout << "|                                                                           |" << endl;
             cout << "|                         | Admin Profile Settings |                        |" << endl;
             cout << "|                                                                           |" << endl;
             cout << "+===========================================================================+" << endl;
             cout << "|                                                                           |" << endl;
-            cout << "|  [1]  =>  Show Admin Informations                                         |" << endl;
+            cout << "|  [1]  =>  Show Admin Information                                          |" << endl;
             cout << "|  [2]  =>  Account Settings                                                |" << endl;
             cout << "|  [0]  =>  Exit                                                            |" << endl;
             cout << "|                                                                           |" << endl;
@@ -82,7 +139,7 @@ class ProfileSetting : public Admin {
             cout << "+===========================================================================+" << endl;
         }
 
-        void showDetials() {
+        void showDetails() {
             cout << "+------------+----------------------------------------+" << endl;
             cout << "| USERNAME   | " << setw(38) << left << getUsername() << " |" << endl;
             cout << "+------------+----------------------------------------+" << endl;
@@ -103,7 +160,7 @@ class ProfileSetting : public Admin {
             cout << "|                                                                           |" << endl;
             cout << "|                           | ADMINISTRATOR PANEL |                         |" << endl;
             cout << "|                                                                           |" << endl;
-            cout << "+============================================================================+" << endl;
+            cout << "+===========================================================================+" << endl;
             cout << "|                                                                           |" << endl;
             cout << "|  [1]  =>  Update Username                                                 |" << endl;
             cout << "|  [2]  =>  Update Email Address                                            |" << endl;
@@ -187,61 +244,61 @@ class ProfileSetting : public Admin {
             setBio(newBio);  // Use setter to update the bio
         }
         
-    void accountSetting() {
-        short option;
-        do {
-            listForUpdate();
-            cout << "[+] Enter your option : "; cin >> option;
-            switch(option) {
-                case 1 : {
-                    updateUsername();
-                    break;
+        void accountSetting() {
+            short option;
+            do {
+                listForUpdate();
+                cout << "[+] Enter your option : "; cin >> option;
+                switch(option) {
+                    case 1 : {
+                        updateUsername();
+                        break;
+                    }
+                    case 2 : {
+                        updateEmail();
+                        break;
+                    }
+                    case 3 : {
+                        updatePassword();
+                        break;
+                    }
+                    case 4 : {
+                        updateTel(); 
+                        break;
+                    }
+                    case 5 : {
+                        updateTelegram();
+                        break;
+                    }
+                    case 6 : {
+                        updateGitHub();
+                        break;
+                    }
+                    case 7 : {
+                        updateBio();
+                        break;
+                    }
+                    case 0 : {
+                        cout << "Exiting..." << endl;
+                        break;
+                    }
+                    default : {
+                        cout << "INVALID OPTION!" << endl;
+                        break;
+                    }
                 }
-                case 2 : {
-                    updateEmail();
-                    break;
-                }
-                case 3 : {
-                    updatePassword();
-                    break;
-                }
-                case 4 : {
-                    updateTel(); 
-                    break;
-                }
-                case 5 : {
-                    updateTelegram();
-                    break;
-                }
-                case 6 : {
-                    updateGitHub();
-                    break;
-                }
-                case 7 : {
-                    updateBio();
-                    break;
-                }
-                case 0 : {
-                    cout << "Exiting..." << endl;
-                    break;
-                }
-                default : {
-                    cout << "INVALID OPTION!" << endl;
-                    break;
-                }
-            }
-        } while(option);
-    }
-    public :
-    
+            } while(option);
+        }
+
+    public:
         void profileSettings() {    
             short op;
             do {
-                listUpdateOrShowDetials();
+                listUpdateOrShowDetails();
                 cout << "[+] Enter your option : "; cin >> op;
                 switch(op) {
                     case 1 : {
-                        showDetials();
+                        showDetails();
                         break;
                     }
                     case 2 : {
