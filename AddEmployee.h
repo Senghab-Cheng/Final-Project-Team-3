@@ -133,6 +133,12 @@ public:
     }
 
     void setEmployeeData() {
+        cout << "+============================================================================+" << endl;
+        cout << "|                                                                            |" << endl;
+        cout << "|                          | SET EMPLOYEE DATA |                             |" << endl;
+        cout << "|                                                                            |" << endl;
+        cout << "+============================================================================+" << endl;
+
         // Enter employee name
         cout << "[+] Enter employee Name: ";
         cin.ignore(); // To ignore any leftover newline characters from previous input
@@ -157,10 +163,12 @@ public:
         cin >> employeeSalary;
         if (isValidSalary(employeeSalary)) {
             setSalaryToFile(employeeSalary);
+            cout << "Employee added successfully." << endl;
             employeeSalaries.push_back(employeeSalary);
         } else {
             cerr << "Error: Invalid salary input." << endl;
         }
+            system("pause");
     }
 
     // Update employee salary in the file

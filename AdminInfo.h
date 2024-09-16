@@ -9,13 +9,13 @@ using namespace std;
 
 class Admin {
     private:
-        string username = "ABC";
-        string email = "abc123@gmail.com";
-        string password = "12345";
-        string bio = "No idea";
-        string tel = "0123456789";
-        string telegram = "ABC";
-        string gitHub = "abc123";
+        string username;
+        string email;
+        string password;
+        string bio;
+        string tel;
+        string telegram;
+        string gitHub;
 
         // Save updated information to file
         void saveToFile() {

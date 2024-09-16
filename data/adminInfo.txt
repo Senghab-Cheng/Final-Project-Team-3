@@ -1,6 +1,6 @@
-Username: toilet
+Username: ABC
 Email: abc123@gmail.com
-Password: 123
+Password: 12345
 Bio: No idea
 Tel: 0123456789
 Telegram: ABC

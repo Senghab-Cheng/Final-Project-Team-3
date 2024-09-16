@@ -98,6 +98,7 @@ private:
         } else {
             cout << "Employee with ID " << id << " is not found." << endl;
         }
+        system("pause");
     }
 
     // Function to update role
@@ -116,17 +117,44 @@ private:
         } else {
             cout << "Employee with ID " << id << " is not found." << endl;
         }
+        system("pause");
     }
 
-    void listForUpdate() {
+    enum KEY { UP = 72, DOWN = 80, ENTER = 13 }; // Arrow keys and Enter key
+
+    void setConsoleTextColor(int color) {
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
+    }
+
+    void listForUpdate(int currentSelection, int totalOptions) {
+        system("cls");
         cout << "+==============================================================================+" << endl;
+        cout << "|                                                                              |" << endl;
         cout << "|                            >>>  UPDATE EMPLOYEE  <<<                         |" << endl;
+        cout << "|                                                                              |" << endl;
         cout << "+==============================================================================+" << endl;
-        cout << "|  [1]  =>  Update Salary                                                      |" << endl;
-        cout << "|  [2]  =>  Update Position                                                    |" << endl;
-        cout << "|  [0]  =>  Exit                                                               |" << endl;
+        cout << "|                                                                              |" << endl;
+        
+        string options[] = {
+            "Update Employee Salary",
+            "Update Employee Position",
+            "Exit"
+        };
+        
+        for (int i = 0; i < totalOptions; i++) {
+            if (i == currentSelection) {
+                setConsoleTextColor(15); // Bold (White text on black background)
+                cout << "|  =>  " << options[i] << string(62 - options[i].length(), ' ') << "            |" << endl;
+            } else {
+                setConsoleTextColor(8); // Normal (Gray text on black background)
+                cout << "|      " << options[i] << string(62 - options[i].length(), ' ') << "            |" << endl;
+            }
+        }
+
+        setConsoleTextColor(7); // Reset to normal color
+        cout << "|                                                                              |" << endl;
         cout << "+==============================================================================+" << endl;
-        cout << "|                 >>>  Select an option by entering the number  <<<            |" << endl;
+        cout << "|                 >>>  Select an option by pressing Enter  <<<                 |" << endl;
         cout << "+==============================================================================+" << endl;
     }
 
@@ -134,30 +162,37 @@ public:
     // Function to handle the update options
     void update() {
         readEmployeeData(); // Read data before updating
-        short option;
+        int currentSelection = 0;
+        const int totalOptions = 3;
+        char key;
         do {
-            listForUpdate();
-            cout << "[+] Enter your option: ";
-            cin >> option;
-
-            switch (option) {
-                case 1: {
-                    updateSalary();
+            listForUpdate(currentSelection, totalOptions);
+            key = _getch(); // Capture key press
+            switch (key) {
+                case UP:
+                    if (currentSelection > 0) currentSelection--; // Move up
                     break;
-                }
-                case 2: {
-                    updateRole();
+                case DOWN:
+                    if (currentSelection < totalOptions - 1) currentSelection++; // Move down
                     break;
-                }
-                case 0: {
-                    cout << "Exiting..." << endl;
+                case ENTER:
+                    switch (currentSelection) {
+                        case 0: {
+                            updateSalary();
+                            break;
+                        }
+                        case 1: {
+                            updateRole();
+                            break;
+                        }
+                        case 2: {
+                            //cout << "Exiting..." << endl;
+                            return; // Exit the function when "Exit" is selected
+                        }
+                    }
                     break;
-                }
-                default: {
-                    cout << "INVALID OPTION!" << endl;
-                    break;
-                }
             }
-        } while (option != 0);
+        this_thread::sleep_for(chrono::milliseconds(20));    
+        } while (true); // Loop until "Exit" is selected and Enter is pressed
     }
 };

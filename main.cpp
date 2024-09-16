@@ -3,6 +3,8 @@
 #include <vector>
 #include <ctime>
 #include <fstream>
+#include <conio.h>
+#include <Windows.h>
 
 #include "Login.h"
 #include "SearchEmployee.h"
@@ -24,47 +26,82 @@ vector<int> employeeIDs;
 vector<string> employeeRoles;
 
 vector<string> employeeNamesBackupX;
-vector<string> employeeRolesBackupX;
-vector<int> employeeIDsBackupX;
 vector<double> employeeSalariesBackupX;
+vector<int> employeeIDsBackupX;
+vector<string> employeeRolesBackupX;
 
 #define LIGHT_BLUE "\033[38;5;123m"
 #define RESET "\033[0m"        // Reset definition
 
-void listForAdminOrEmployee() {
-    cout << LIGHT_BLUE;
+enum KEY { UP = 72, DOWN = 80, ENTER = 13 }; // Arrow keys and Enter key
+void setConsoleTextColor(int color) {
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
+}
+
+void listForAdminOrEmployee(int currentSelection, int totalOptions) {
+    //cout << LIGHT_BLUE;
     cout << "+============================================================================+" << endl;
     cout << "|                                                                            |" << endl;
     cout << "|                          | MANAGEMENT SYSTEM |                             |" << endl;
     cout << "|                                                                            |" << endl;
     cout << "+============================================================================+" << endl;
     cout << "|                                                                            |" << endl;
-    cout << "|  [1]  =>  Administrator                                                    |" << endl;
-    cout << "|  [2]  =>  Employee Portal                                                  |" << endl;
-    cout << "|  [0]  =>  Exit                                                             |" << endl;
+   
+    string options[] = {
+        "Administrator",
+        "Employee Portal",
+        "Exit"
+    };
+
+    for (int i = 0; i < totalOptions; i++) {
+            if (i == currentSelection) {
+                setConsoleTextColor(15); // Bold (White text on black background)
+                cout << "|  =>  " << options[i] << string(62 - options[i].length(), ' ') << "        |" << endl;
+            } else {
+                setConsoleTextColor(8); // Normal (Gray text on black background)
+                cout << "|      " << options[i] << string(62 - options[i].length(), ' ') << "        |" << endl;
+            }
+    }
+
+    setConsoleTextColor(7);
     cout << "|                                                                            |" << endl;
     cout << "+============================================================================+" << endl;
-    cout << "|               >>>  Please select an option by entering a number  <<<       |" << endl;
+    cout << "|                >>>  Select an option by pressing Enter  <<<                |" << endl;
     cout << "+============================================================================+" << endl;
-    cout << RESET;
 }
 
-void adminMenu() {
+void adminMenu(int currentSelection, int totalOptions) {
     cout << "+===========================================================================+" << endl;
     cout << "|                                                                           |" << endl;
     cout << "|                                | ADMIN PANEL |                            |" << endl;
     cout << "|                                                                           |" << endl;
     cout << "+===========================================================================+" << endl;
     cout << "|                                                                           |" << endl;
-    cout << "|  [1]  =>  View Employee List                                              |" << endl;
-    cout << "|  [2]  =>  Employee Attendance Tracking                                    |" << endl;
-    cout << "|  [3]  =>  Employee Management                                             |" << endl;
-    cout << "|  [4]  =>  Search for Employees                                            |" << endl;
-    cout << "|  [5]  =>  Admin Profile Settings                                          |" << endl;
-    cout << "|  [0]  =>  Exit to Main Menu                                               |" << endl;
+    
+    string options[] = {
+        "View Employee List",
+        "Employee Attencedance Records",
+        "Employee Management",
+        "Search For Employee",
+        "Admin Profile Settings",
+        "Exiting"
+    };
+    
+    for (int i = 0; i < totalOptions; i++) {
+        if (i == currentSelection) {
+            setConsoleTextColor(15); // Bold (White text on black background)
+            cout << "|  =>  " << options[i] << string(62 - options[i].length(), ' ') << "       |" << endl;
+        } else {
+            setConsoleTextColor(8); // Normal (Gray text on black background)
+            cout << "|      " << options[i] << string(62 - options[i].length(), ' ') << "       |" << endl;
+        }
+    }
+    
+    setConsoleTextColor(7);
+
     cout << "|                                                                           |" << endl;
     cout << "+===========================================================================+" << endl;
-    cout << "|            >>>  Please choose an option by entering a number  <<<         |" << endl;
+    cout << "|               >>>  Select an option by pressing Enter  <<<                |" << endl;
     cout << "+===========================================================================+" << endl;
 
 }
@@ -166,86 +203,121 @@ void adminProfileSetting() {
 }
 
 void ui() {
-    short op;
-    do {
-    ManagementSystem();
-    listForAdminOrEmployee();
-        cout << "[+] Enter your option : "; cin >> op;
-        switch(op) {
+    int currentSelection = 0;
+    const int totalOptions = 3;
+    char key;
 
-            // Admin
-            case 1 : {
-                //getLoadingBar();
-                system("cls");
-                adminPanel();
-                Login admin1;
-                if (admin1.userLogin()) {
-                    system("cls");
-                    short option;
-                    do {
-                        adminMenu();
-                        cout << "[+] Enter your option : "; cin >> option;
-                        switch(option) {
-                            case 1 : {
-                                ListEmployees employee1a;
-                                employee1a.listEmployee();
-                                break;
+    while (true) {
+        system("cls"); // Clear the console
+        listForAdminOrEmployee(currentSelection, totalOptions);
+        key = _getch(); // Capture key press
+
+        switch(key) {
+            case UP: {
+                if (currentSelection > 0) currentSelection--; // Move up
+                break;
+            }
+            case DOWN: {
+                if (currentSelection < totalOptions - 1) currentSelection++; // Move down
+                break;
+            }
+            case ENTER: {
+                system("cls"); // Clear the console before showing the next screen
+                if (currentSelection == 0) { // Administrator
+                    Login admin1;
+                    if (admin1.userLogin()) { // Check if login is successful
+                        system("cls"); // Clear the console before showing the admin menu
+                        cout << "Login successful. Displaying admin menu..." << endl; // Debug output
+                        int currentSelection2 = 0;
+                        const int totalOptions2 = 6;
+                        char key2;
+                        bool isExit = 0;
+                        while (!isExit) {
+                            system("cls");
+                            adminMenu(currentSelection2, totalOptions2); // Show admin menu
+                            key2 = _getch(); // Capture key press
+
+                            switch(key2) {
+                                case UP: {
+                                    if (currentSelection2 > 0) currentSelection2--; // Move up
+                                    break;
+                                }
+                                case DOWN: {
+                                    if (currentSelection2 < totalOptions2 - 1) currentSelection2++; // Move down
+                                    break;
+                                }
+                                case ENTER: {
+                                    switch (currentSelection2) {
+                                        case 0: {
+                                            ListEmployees emp1;
+                                            emp1.listEmployee();
+                                            break;
+                                        }
+                                        case 1: {
+                                            Employee empRecords;
+                                            empRecords.checkAttendacneRecords();
+                                            break;
+                                        }
+                                        case 2: {
+                                            employeeManagement();
+                                            Manipulate emp2;
+                                            emp2.manipulate();
+                                            break;
+                                        }
+                                        case 3: {
+                                            searchForEmployee();
+                                            this_thread::sleep_for(chrono::milliseconds(700));
+                                            SearchEmployee emp3;
+                                            emp3.searchEmployee();
+                                            break;
+                                        }
+                                        case 4: {
+                                            adminProfileSetting();
+                                            ProfileSetting emp4;
+                                            emp4.profileSettings();
+                                            break;
+                                        }
+                                        case 5: {
+                                            //cout << "Exiting..." << endl;
+                                            isExit = 1;
+                                            break;
+                                            //break; // Exit the program
+                                        }
+                                        default: {
+                                            cout << "INVALID OPTION!" << endl;
+                                            break;
+                                        }
+                                    }
+                                    break;
+                                }
+                                default:
+                                    break; // Ignore other keys
                             }
-                            case 2 : {
-                                // check attendance employees
-                                break;
-                            }
-                            case 3 : {
-                                employeeManagement();
-                                Manipulate employee1d;
-                                employee1d.manipulate();
-                                break;
-                            }
-                            case 4 : {
-                                searchForEmployee();
-                                SearchEmployee employee1e;
-                                employee1e.searchEmployee();
-                                break;
-                            }
-                            case 5 : {
-                                adminProfileSetting();
-                                ProfileSetting p1;
-                                p1.profileSettings();
-                                break;
-                            }
-                            case 0 : {
-                                cout << "Exting..." << endl;
-                                break;
-                            }
-                            default : {
-                                cout << "INVALID OPTION!" << endl;
-                                break;
-                            }
+                            this_thread::sleep_for(chrono::milliseconds(15));    
+                            // if (key2 == 5) break; // Break the loop if "Exiting" is selected
                         }
-                    }while(option);
-                } 
+                    } else {
+                        cout << "Login failed. Please try again." << endl;
+                        this_thread::sleep_for(chrono::seconds(2)); // Pause before retry
+                    }
+                } else if (currentSelection == 1) { // Employee Portal
+                    Employee emp;
+                    emp.checkInCheckOut();
+                    cout << "Employee Portal is not implemented yet." << endl;
+                } else if (currentSelection == 2) { // Exit
+                    cout << "Exiting..." << endl;
+                    return; // Exit the program
+                }
                 break;
             }
-            
-            // Employee
-            case 2 : {
-                system("cls");
-                // checkIn, checkOut
-                Employee employee1;
-                employee1.checkInCheckOut();
-                break;
-            }
-            case 0 : {
-                cout << "Exiting..." << endl;
-                break;
-            }
-            default : {
-                cout << "INVALID OPTION!" << endl;
-                break;
-            }
+            default:
+                break; // Ignore other keys
         }
-    }while(op);  
-}  
+
+        // Add a small delay to ensure the console has time to update
+        this_thread::sleep_for(chrono::milliseconds(15));
+    }
+}
 
 int main() {
     system("cls");
@@ -255,6 +327,10 @@ int main() {
     //employeeManagement();
     //SearchEmployee();
     //adminProfileSetting();
+    // Employee empRecord;
+    // empRecord.checkAttendanceRecords();
+    // ProfileSetting emp;
+    // emp.profileSettings();
 
     return 0;
 }

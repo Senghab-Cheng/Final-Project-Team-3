@@ -1,0 +1,2 @@
+                                            Employee empRecords;
+                                            empRecords.checkAttendanceRecords();

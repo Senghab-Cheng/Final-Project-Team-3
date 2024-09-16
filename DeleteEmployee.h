@@ -20,28 +20,42 @@ class DeleteEmployee {
 
 public:
     void manage() {
-        loadEmployeeData(); // Load data from files before managing deletions
-        short option;
+        //loadEmployeeData(); // Load data from files before managing deletions
+        int currentSelection = 0;
+        const int totalOptions = 3;
+        char key;
         do {
-            listForDelete();
-            cout << "[+] Enter your option: ";
-            cin >> option;
-
-            switch (option) {
-                case 1:
-                    deleteEmployeeById();
+            system("cls");
+            listForDelete(currentSelection, totalOptions);
+            key = _getch(); // Capture key press
+            switch (key) {
+                case UP:
+                    if (currentSelection > 0) currentSelection--; // Move up
                     break;
-                case 2:
-                    deleteEmployeeByUsername();
+                case DOWN:
+                    if (currentSelection < totalOptions - 1) currentSelection++; // Move down
                     break;
-                case 0:
-                    cout << "Exiting..." << endl;
-                    break;
-                default:
-                    cout << "INVALID OPTION!" << endl;
+                case ENTER:
+                    switch (currentSelection) {
+                        case 0: {
+                            deleteEmployeeById();
+                            system("pause");
+                            break;
+                        }
+                        case 1: {
+                            deleteEmployeeByUsername();
+                            system("pause");
+                            break;
+                        }
+                        case 2: {
+                            //cout << "Exiting..." << endl;
+                            return; // Exit the function when "Exit" is selected
+                        }
+                    }
                     break;
             }
-        } while (option != 0);
+        this_thread::sleep_for(chrono::milliseconds(20));    
+        } while (true); // Loop until "Exit" is selected and Enter is pressed
     }
 
 private:
@@ -110,7 +124,7 @@ private:
     void deleteEmployeeByUsername() {
         string username;
         cout << "[+] Enter employee Username to delete: ";
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         getline(cin, username);
 
         auto itName = find(employeeNames.begin(), employeeNames.end(), username);
@@ -186,19 +200,41 @@ private:
         roleFile.close();
     }
 
-    void listForDelete() {
+    enum KEY { UP = 72, DOWN = 80, ENTER = 13 }; // Arrow keys and Enter key
+
+    void setConsoleTextColor(int color) {
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
+    }
+
+    void listForDelete(int currentSelection, int totalOptions) {
+        
         cout << "+================================================================================+" << endl;
         cout << "|                                                                                |" << endl;
         cout << "|                             >>>  DELETE EMPLOYEE  <<<                          |" << endl;
         cout << "|                                                                                |" << endl;
         cout << "+================================================================================+" << endl;
         cout << "|                                                                                |" << endl;
-        cout << "|  [1]  =>  Delete Employee By ID                                                |" << endl;
-        cout << "|  [2]  =>  Delete Employee By Username                                          |" << endl;
-        cout << "|  [0]  =>  Exit                                                                 |" << endl;
+        
+        string options[] = {
+            "Delete Employee By ID",
+            "Delete Employee By Name",
+            "Exit"
+        };
+
+                for (int i = 0; i < totalOptions; i++) {
+            if (i == currentSelection) {
+                setConsoleTextColor(15); // Bold (White text on black background)
+                cout << "|  =>  " << options[i] << string(62 - options[i].length(), ' ') << "          |" << endl;
+            } else {
+                setConsoleTextColor(8); // Normal (Gray text on black background)
+                cout << "|      " << options[i] << string(62 - options[i].length(), ' ') << "          |" << endl;
+            }
+        }
+
+        setConsoleTextColor(7); // Reset to normal color
         cout << "|                                                                                |" << endl;
         cout << "+================================================================================+" << endl;
-        cout << "|                >>>  Select an option by entering the number  <<<               |" << endl;
+        cout << "|                  >>>  Select an option by pressing enter  <<<                  |" << endl;
         cout << "+================================================================================+" << endl;
     }
 };

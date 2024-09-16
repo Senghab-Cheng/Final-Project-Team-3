@@ -3,6 +3,10 @@
 #include <iostream>
 #include <iomanip>
 #include <ctime>
+#include <fstream>
+#include <conio.h>
+#include <Windows.h>
+
 #include "AddEmployee.h"
 #include "loadingBar.h"
 //#include "QR.h"
@@ -29,17 +33,32 @@ class Employee{
             }
         }
         
-        void list() {
-            employeePanel();
+        void list(int currentSelection, int totalOptions) {
+            // employeePanel();
             cout << "+==============================================================================+" << endl;
             cout << "|                                                                              |" << endl;
             cout << "|                            >>>  EMPLOYEE PANEL  <<<                          |" << endl;
             cout << "|                                                                              |" << endl;
             cout << "+==============================================================================+" << endl;
             cout << "|                                                                              |" << endl;
-            cout << "|  [1]  =>  CHECK-IN                                                           |" << endl;
-            cout << "|  [2]  =>  CHECK-OUT                                                          |" << endl;
-            cout << "|  [0]  =>  Exit                                                               |" << endl;
+            
+            string options[] = {
+                "CHECK-IN",
+                "CHECK-OUT",
+                "Exit"
+            };
+            for (int i = 0; i < totalOptions; i++) {
+                if (i == currentSelection) {
+                    setConsoleTextColor(15); // Bold (White text on black background)
+                    cout << "|  =>  " << options[i] << string(62 - options[i].length(), ' ') << "          |" << endl;
+                } else {
+                    setConsoleTextColor(8); // Normal (Gray text on black background)
+                    cout << "|      " << options[i] << string(62 - options[i].length(), ' ') << "          |" << endl;
+                }
+            }
+
+        setConsoleTextColor(7); // Reset to normal color
+            
             cout << "|                                                                              |" << endl;
             cout << "+==============================================================================+" << endl;
             cout << "|              >>>  Select an option by entering the number  <<<               |" << endl;
@@ -95,7 +114,7 @@ class Employee{
         }
 
         void checkIn() {
-            checkInStyle();
+            // checkInStyle();
             cout << "+==============================================================================+" << endl;
             cout << "|                                                                              |" << endl;
             cout << "|                              >>>  CHECK-IN  <<<                              |" << endl;
@@ -122,13 +141,33 @@ class Employee{
             //}
 
             //getLoadingBar();
-            string SERVER_URL = "http://192.168.4.184:5466/checkin";  // Check-in URL
+            string SERVER_URL = "http://192.168.1.246:5466/checkin";  // Check-in URL
             string command = "curl qrenco.de/" + SERVER_URL;
             system(command.c_str());
+            this_thread::sleep_for(chrono::seconds(4));
+
+
+            // Get current time
+            time_t now = time(0);
+
+            // Convert to local time
+            tm* localTime = localtime(&now);
+
+            ofstream checkInRecords("data/checkInRecords.txt", ios::app);
+            if (checkInRecords.is_open()) {
+                // Print the current date and time
+                checkInRecords << "Employee Checked-In at " 
+                                << 1900 + localTime->tm_year << "-"
+                                << 1 + localTime->tm_mon << "-"
+                                << localTime->tm_mday << " "
+                                << localTime->tm_hour << ":"
+                                << localTime->tm_min << '\n';
+                checkInRecords.close();
+            }
         }
 
         void checkOut() {
-            checkOutStyle();
+            // checkOutStyle();
             cout << "+==============================================================================+" << endl;
             cout << "|                                                                              |" << endl;
             cout << "|                             >>>  CHECK-OUT  <<<                              |" << endl;
@@ -155,39 +194,176 @@ class Employee{
             // }
 
             //getLoadingBar();
-            string SERVER_URL = "http://192.168.4.184:5466/checkout";  // Check-out URL
+            string SERVER_URL = "http://192.168.1.246:5466/checkout";  // Check-out URL
             string command = "curl qrenco.de/" + SERVER_URL;
             system(command.c_str());
+            this_thread::sleep_for(chrono::seconds(4));
+
+            // Get current time
+            time_t now = time(0);
+
+            // Convert to local time
+            tm* localTime = localtime(&now);
+
+            ofstream checkOutRecords("data/checkOutRecords.txt", ios::app);
+            if (checkOutRecords.is_open()) {
+                // Print the current date and time
+                checkOutRecords << "Employee Checked-Out at " 
+                                << 1900 + localTime->tm_year << "-"
+                                << 1 + localTime->tm_mon << "-"
+                                << localTime->tm_mday << " "
+                                << localTime->tm_hour << ":"
+                                << localTime->tm_min << '\n';
+                checkOutRecords.close();
+            }
+        }
+
+                // print checked-in records
+        void checkInAttendanceRecords() {
+            ifstream readCheckInRecords("data/checkInRecords.txt");
+            if (readCheckInRecords.is_open()) {
+                string record;
+                cout << "+=====================================================+" << endl;
+                cout << "|                       CHECK-IN                      |" << endl;
+                cout << "+=====================================================+" << endl;
+                while(getline(readCheckInRecords, record)) {
+                    cout << "| " << record << setw(15) << "|" << endl;
+                }
+                cout << "+=====================================================+" << endl;
+                readCheckInRecords.close();
+            }
+            else 
+                cerr << "Error : Unable to open file checkInRecords.txt" << endl;
+        }
+
+        void checkOutAttendanceRecords() {
+            ifstream readCheckOutRecords("data/checkOutRecords.txt");
+            if (readCheckOutRecords.is_open()) {
+                string record;
+                cout << "+=====================================================+" << endl;
+                cout << "|                      CHECK-OUT                      |" << endl;
+                cout << "+=====================================================+" << endl;
+                while(getline(readCheckOutRecords, record)) {
+                    cout << "| " << record << setw(14) << "|" << endl;
+                }
+                cout << "+=====================================================+" << endl;
+                readCheckOutRecords.close();
+            }
+            else 
+                cerr << "Error : Unable to open file checkOutRecords.txt" << endl;
+        }
+
+        enum KEY { UP = 72, DOWN = 80, ENTER = 13 }; // Arrow keys and Enter key
+        void setConsoleTextColor(int color) {
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
+        }
+        void attendanceRecordsHighlight(int currentSelection, int totalOptions) {
+            cout << "+==============================================================================+" << endl;
+            cout << "|                                                                              |" << endl;
+            cout << "|                        >>>  ATTENDANCE RECORDS  <<<                          |" << endl;
+            cout << "|                                                                              |" << endl;
+            cout << "+==============================================================================+" << endl;
+            cout << "|                                                                              |" << endl;
+            
+            string options[] = {
+                "Checked-In Records",
+                "Checked-Out Records",
+                "Exit"
+            };
+
+            for (int i = 0; i < totalOptions; i++) {
+                if (i == currentSelection) {
+                    setConsoleTextColor(15); // Bold (White text on black background)
+                    cout << "|  =>  " << options[i] << string(62 - options[i].length(), ' ') << "          |" << endl;
+                } else {
+                    setConsoleTextColor(8); // Normal (Gray text on black background)
+                    cout << "|      " << options[i] << string(62 - options[i].length(), ' ') << "          |" << endl;
+                }
+            }
+            
+            setConsoleTextColor(7);
+
+            cout << "|                                                                              |" << endl;
+            cout << "+==============================================================================+" << endl;
+            cout << "|                 >>>  Select an option by pressing Enter  <<<                 |" << endl;
+            cout << "+==============================================================================+" << endl; 
         }
 
     public :
         void checkInCheckOut() {
-            short option;
+            int currentSelection = 0;
+            const int totalOptions = 3;
             do {
-                list();
-                cout << "[+] Enter your option : "; cin >> option;
-                switch(option) {
-                    case 1 : {
-                        system("cls");
-                        checkIn();
+                system("cls");
+                list(currentSelection, totalOptions);
+                char key = _getch(); // Capture key press
+
+                switch (key) {
+                    case UP:
+                        if (currentSelection > 0) currentSelection--; // Move up
                         break;
-                    }
-                    case 2 : {
-                        system("cls");
-                        checkOut();
+                    case DOWN:
+                        if (currentSelection < totalOptions - 1) currentSelection++; // Move down
                         break;
-                    }
-                    case 0 : {
-                        cout << "Exiting..." << endl;
-                        //getLoadingBar();
-                        system("cls");
+                    case ENTER:
+                        switch (currentSelection) {
+                            case 0: {
+                                checkIn();
+                                system("pause");
+                                break;
+                            }
+                            case 1: {
+                                checkOut();
+                                system("pause");
+                                break;
+                            }
+                            case 2: {
+                                //cout << "Exiting..." << endl;
+                                return; // Exit the function when "Exit" is selected
+                            }
+                        }
                         break;
-                    }
-                    default : {
-                        cout << "INVALID OPTION!" << endl;
-                        break;
-                    }
                 }
-            } while(option);
+            this_thread::sleep_for(chrono::milliseconds(20));    
+            } while (true); // Loop until "Exit" is selected and Enter is pressed
+        }
+
+        void checkAttendacneRecords() {
+            int currentSelection = 0;
+            const int totalOptions = 3;
+            char key;
+
+        do {
+            system("cls");
+            attendanceRecordsHighlight(currentSelection, totalOptions);
+            key = _getch(); // Capture key press
+            switch (key) {
+                case UP:
+                    if (currentSelection > 0) currentSelection--; // Move up
+                    break;
+                case DOWN:
+                    if (currentSelection < totalOptions - 1) currentSelection++; // Move down
+                    break;
+                case ENTER:
+                    switch (currentSelection) {
+                        case 0: {
+                            checkInAttendanceRecords();
+                            system("pause");
+                            break;
+                        }
+                        case 1: {
+                            checkOutAttendanceRecords();
+                            system("pause");
+                            break;
+                        }
+                        case 2: {
+                            //cout << "Exiting..." << endl;
+                            return; // Exit the function when "Exit" is selected
+                        }
+                    }
+                    break;
+            }
+        this_thread::sleep_for(chrono::milliseconds(20));    
+        } while (true); // Loop until "Exit" is selected and Enter is pressed
         }
 };

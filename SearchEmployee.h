@@ -49,7 +49,7 @@ private:
 
     void searchEmployeeByName() {
         cout << "[+] Enter employee name (or partial name): ";
-        cin.ignore();
+        //cin.ignore();
         string employeeName;
         getline(cin, employeeName);
 
@@ -61,7 +61,7 @@ private:
         if (employeeName.length() == 1) {
             char employeeNameLetter = employeeName[0];
             //getLoadingBar();
-            system("cls");
+            //system("cls");
             cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
             cout << "| ID         | NAME                            | ROLE                    | SALARY                 |" << endl;
             cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
@@ -71,10 +71,10 @@ private:
                 transform(lowerName.begin(), lowerName.end(), lowerName.begin(), ::tolower);
 
                 if (lowerName.find(employeeNameLetter) != string::npos) {
-                    cout << "| " << setw(10) << left << employeeIDs[i]
-                        << "| " << setw(33) << left << employeeNames[i]
-                        << "| " << setw(25) << left << employeeRoles[i]
-                        << "| " << right << fixed << setprecision(2) << employeeSalaries[i] << "$" << setw(15) << " |" << endl;
+                    cout << "| " << setw(11) << left << employeeIDs[i]
+                         << "| " << setw(32) << left << employeeNames[i]
+                         << "| " << setw(24) << left << employeeRoles[i]
+                         << "| " << right << fixed << setprecision(2) << employeeSalaries[i] << "$" << setw(16) << " |" << endl;
                     isFound = true;
                 }
             }
@@ -86,7 +86,7 @@ private:
             }
         } else {
             //getLoadingBar();
-            system("cls");
+            //system("cls");
             cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
             cout << "| ID         | NAME                            | ROLE                    | SALARY                 |" << endl;
             cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
@@ -96,10 +96,10 @@ private:
                 transform(lowerName.begin(), lowerName.end(), lowerName.begin(), ::tolower);
 
                 if (lowerName.find(employeeName) != string::npos) {
-                    cout << "| " << setw(10) << left << employeeIDs[i]
-                        << "| " << setw(33) << left << employeeNames[i]
-                        << "| " << setw(25) << left << employeeRoles[i]
-                        << "| " << right << fixed << setprecision(2) << employeeSalaries[i] << "$" << setw(15) << " |" << endl;
+                    cout << "| " << setw(11) << left << employeeIDs[i]
+                         << "| " << setw(32) << left << employeeNames[i]
+                         << "| " << setw(24) << left << employeeRoles[i]
+                         << "| " << right << fixed << setprecision(2) << employeeSalaries[i] << "$" << setw(16) << " |" << endl;
                     isFound = true;
                 }
             }
@@ -121,63 +121,95 @@ private:
         if (it != employeeIDs.end()) {
             size_t index = distance(employeeIDs.begin(), it);
             cin.ignore();
-            getLoadingBar();
-            system("cls");
+            //getLoadingBar();
+            //system("cls");
             cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
             cout << "| ID         | NAME                            | ROLE                    | SALARY                 |" << endl;
             cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
-            cout << "| " << setw(10) << left << employeeIDs[index]
-                << "| " << setw(33) << left << employeeNames[index]
-                << "| " << setw(25) << left << employeeRoles[index]
-                << "| " << right << fixed << setprecision(2) << employeeSalaries[index] << "$" << setw(13) << " |" << endl;
+            cout << "| " << setw(11) << left << employeeIDs[index]
+                 << "| " << setw(32) << left << employeeNames[index]
+                 << "| " << setw(24) << left << employeeRoles[index]
+                 << "| " << right << fixed << setprecision(2) << employeeSalaries[index] << "$" << setw(16) << " |" << endl;
             cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
         } else {
             cout << "Employee with ID " << id << " not found." << endl;
         }
     }
 
-    void listForSearchEmployee() {
+
+    enum KEY { UP = 72, DOWN = 80, ENTER = 13 }; // Arrow keys and Enter key
+    void setConsoleTextColor(int color) {
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
+    }
+    void listForSearchEmployee(int currentSelection, int totalOptions) {
         cout << "+==============================================================================+" << endl;
         cout << "|                                                                              |" << endl;
         cout << "|                            >>>  SEARCH EMPLOYEE  <<<                         |" << endl;
         cout << "|                                                                              |" << endl;
         cout << "+==============================================================================+" << endl;
         cout << "|                                                                              |" << endl;
-        cout << "|  [1]  =>  Search Employee By ID                                              |" << endl;
-        cout << "|  [2]  =>  Search Employee By Name                                            |" << endl;
-        cout << "|  [0]  =>  Exit                                                               |" << endl;
-        cout << "|                                                                              |" << endl;
-        cout << "+==============================================================================+" << endl;
-        cout << "|                 >>>  Select an option by entering the number  <<<            |" << endl;
-        cout << "+==============================================================================+" << endl;  
+        
+        string options[] = {
+            "Search Employee By ID",
+            "Search Employee By Name",
+            "Exit"
+        };
+
+        for (int i = 0; i < totalOptions; i++) {
+            if (i == currentSelection) {
+                setConsoleTextColor(15); // Bold (White text on black background)
+                cout << "|  =>  " << options[i] << string(62 - options[i].length(), ' ') << "          |" << endl;
+            } else {
+                setConsoleTextColor(8); // Normal (Gray text on black background)
+                cout << "|      " << options[i] << string(62 - options[i].length(), ' ') << "          |" << endl;
+            }
+        }
+        
+    setConsoleTextColor(7);
+    cout << "|                                                                              |" << endl;
+    cout << "+==============================================================================+" << endl;
+    cout << "|                  >>>  Select an option by pressing Enter  <<<                |" << endl;
+    cout << "+==============================================================================+" << endl;
     }
 
 public:
     void searchEmployee() {
         loadEmployeeData(); // Load data from files
-        short choice;
+        int currentSelection = 0;
+        const int totalOptions = 3;
+        char key;
         do {
-            listForSearchEmployee();
-            cout << "[+] Enter your choice : ";
-            cin >> choice;
-            switch (choice) {
-                case 1: {
-                    searchEmployeeByID();
+            system("cls");
+            listForSearchEmployee(currentSelection, totalOptions);
+            key = _getch();
+            switch (key) {
+                case UP:
+                    if (currentSelection > 0) currentSelection--; // Move up
                     break;
-                }
-                case 2: {
-                    searchEmployeeByName();
+                case DOWN:
+                    if (currentSelection < totalOptions - 1) currentSelection++; // Move down
                     break;
-                }
-                case 0: {
-                    cout << "Exiting..." << endl;
+                case ENTER:
+                    //system("cls");
+                    switch (currentSelection) {
+                        case 0: {
+                            searchEmployeeByID();
+                            system("pause");
+                            break;
+                        }
+                        case 1: {
+                            searchEmployeeByName();
+                            system("pause");
+                            break;
+                        }
+                        case 2: {
+                            //cout << "Exiting..." << endl;
+                            return; // Exit the function when "Exit" is selected
+                        }
+                    }
                     break;
-                }
-                default: {
-                    cout << "INVALID OPTION!" << endl;
-                    break;
-                }
             }
-        } while (choice != 0);
+        this_thread::sleep_for(chrono::milliseconds(20));  
+        } while (true);
     }
 };
