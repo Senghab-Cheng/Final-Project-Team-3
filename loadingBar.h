@@ -30,6 +30,12 @@ inline void printLoadingBar(int progress, int width) {
     std::cout.flush();
 }
 
+// Inline function to clear the line after the loading bar is done
+inline void clearLoadingBar(int width) {
+    std::cout << "\r" << std::string(width + 10, ' ') << "\r"; // Clear the line
+    std::cout.flush();
+}
+
 // Inline function to simulate loading
 inline void getLoadingBar() {
     int width = 50;
@@ -37,5 +43,5 @@ inline void getLoadingBar() {
         printLoadingBar(i, width);
         std::this_thread::sleep_for(std::chrono::milliseconds(13)); // Adjust speed of animation
     }
-    std::cout << std::endl;
+    clearLoadingBar(width); // Clear the loading bar line after completion
 }

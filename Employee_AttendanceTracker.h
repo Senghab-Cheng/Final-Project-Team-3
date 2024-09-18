@@ -13,6 +13,16 @@
 
 using namespace std;
 
+#define LIGHT_BLUE "\033[38;5;123m"
+#define BRIGHT_GREEN "\033[38;5;122m"
+#define LIGHT_GREEN "\033[92m"
+#define LIGHT_PINK "\033[38;5;217m"
+#define LIGHT_PEACH "\033[38;5;223m"
+#define CYAN "\033[36m"
+#define GREEN "\033[38;5;46m"
+#define BRIGHT_RED "\033[91m"
+#define RESET "\033[0m"        // Reset definition
+
 class Employee{
     private :
         int id;
@@ -35,12 +45,13 @@ class Employee{
         
         void list(int currentSelection, int totalOptions) {
             // employeePanel();
-            cout << "+==============================================================================+" << endl;
-            cout << "|                                                                              |" << endl;
-            cout << "|                            >>>  EMPLOYEE PANEL  <<<                          |" << endl;
-            cout << "|                                                                              |" << endl;
-            cout << "+==============================================================================+" << endl;
-            cout << "|                                                                              |" << endl;
+            cout << "+=================================================================================================+" << endl;
+            cout << "|                                                                                                 |" << endl;
+            cout << "|";cout << LIGHT_PEACH;
+            cout << "                                      >>>  EMPLOYEE PANEL  <<<                                   ";cout << RESET;cout << "|" << endl;
+            cout << "|                                                                                                 |" << endl;
+            cout << "+=================================================================================================+" << endl;
+            cout << "|                                                                                                 |" << endl;
             
             string options[] = {
                 "CHECK-IN",
@@ -50,19 +61,21 @@ class Employee{
             for (int i = 0; i < totalOptions; i++) {
                 if (i == currentSelection) {
                     setConsoleTextColor(15); // Bold (White text on black background)
-                    cout << "|  =>  " << options[i] << string(62 - options[i].length(), ' ') << "          |" << endl;
+                    cout << "|  =>    " << options[i] << string(62 - options[i].length(), ' ') << "                           |" << endl;
                 } else {
                     setConsoleTextColor(8); // Normal (Gray text on black background)
-                    cout << "|      " << options[i] << string(62 - options[i].length(), ' ') << "          |" << endl;
+                    cout << "|        " << options[i] << string(62 - options[i].length(), ' ') << "                           |" << endl;
                 }
             }
 
         setConsoleTextColor(7); // Reset to normal color
             
-            cout << "|                                                                              |" << endl;
-            cout << "+==============================================================================+" << endl;
-            cout << "|              >>>  Select an option by entering the number  <<<               |" << endl;
-            cout << "+==============================================================================+" << endl; 
+        cout << "|                                                                                                 |" << endl;
+        cout << "+=================================================================================================+" << endl;
+        cout << "|";cout << LIGHT_GREEN;
+        cout << "                          >>>  Select an option by pressing Enter  <<<                           ";cout << RESET;
+        cout << "|" << endl;
+        cout << "+=================================================================================================+" << endl;
         }
 
         void getCurrentTime() {
@@ -93,7 +106,7 @@ class Employee{
                 }
                 checkInStyle.close(); // Close the file
             } else {
-                cout << "Unable to open the file!" << endl;
+                cerr << BRIGHT_RED << "Unable to open the file!" << RESET << endl;
             } 
         }
 
@@ -109,37 +122,18 @@ class Employee{
                 }
                 checkOutStyle.close(); // Close the file
             } else {
-                cout << "Unable to open the file!" << endl;
+                cerr << BRIGHT_RED << "Unable to open the file!" << RESET << endl;
             }
         }
 
         void checkIn() {
             // checkInStyle();
-            cout << "+==============================================================================+" << endl;
-            cout << "|                                                                              |" << endl;
-            cout << "|                              >>>  CHECK-IN  <<<                              |" << endl;
-            cout << "|                                                                              |" << endl;
-            cout << "+==============================================================================+" << endl;
-            // cout << "[+] Enter your ID to check-in : ";
-            // cin >> this->id;
-
-            // auto it = find(employeeIDs.begin(), employeeIDs.end(), id);
-            // if (it != employeeIDs.end()) {
-            //     size_t index = distance(employeeIDs.begin(), it);
-            //     //getLoadingBar();
-            //     system("cls");
-            //     cout << "+------------+---------------------------------+-------------------------+" << endl;
-            //     cout << "| ID         | NAME                            | ROLE                    |" << endl;
-            //     cout << "+------------+---------------------------------+-------------------------+" << endl;
-            //     cout << "| " << setw(10) << left << employeeIDs[index]
-            //         << " | " << setw(32) << left << employeeNames[index]
-            //         << "| " << setw(23) << left << employeeRoles[index]
-            //         << " | "<< endl;
-            //     cout << "+------------+---------------------------------+-------------------------+" << endl;
-            //     cout << "Checked In successfully : ";
-            //     getCurrentTime();
-            //}
-
+            cout << "+=================================================================================================+" << endl;
+            cout << "|                                                                                                 |" << endl;
+            cout << "|";cout << LIGHT_PEACH;
+            cout << "                                       >>>  CHECK-IN  <<<                                        ";cout << RESET;cout << "|" << endl;
+            cout << "|                                                                                                 |" << endl;
+            cout << "+=================================================================================================+" << endl;
             //getLoadingBar();
             string SERVER_URL = "http://192.168.1.246:5466/checkin";  // Check-in URL
             string command = "curl qrenco.de/" + SERVER_URL;
@@ -168,30 +162,12 @@ class Employee{
 
         void checkOut() {
             // checkOutStyle();
-            cout << "+==============================================================================+" << endl;
-            cout << "|                                                                              |" << endl;
-            cout << "|                             >>>  CHECK-OUT  <<<                              |" << endl;
-            cout << "|                                                                              |" << endl;
-            cout << "+==============================================================================+" << endl;
-            // cout << "[+] Enter your ID to check-in : ";
-            // cin >> this->id;
-
-            // auto it = find(employeeIDs.begin(), employeeIDs.end(), id);
-            // if (it != employeeIDs.end()) {
-            //     size_t index = distance(employeeIDs.begin(), it);
-            //     //getLoadingBar();
-            //     system("cls");
-            //     cout << "+------------+---------------------------------+-------------------------+" << endl;
-            //     cout << "| ID         | NAME                            | ROLE                    |" << endl;
-            //     cout << "+------------+---------------------------------+-------------------------+" << endl;
-            //     cout << "| " << setw(10) << left << employeeIDs[index]
-            //         << "| " << setw(33) << left << employeeNames[index]
-            //         << "| " << setw(25) << left << employeeRoles[index]
-            //         << "| "<< endl;
-            //     cout << "+------------+---------------------------------+-------------------------+" << endl;
-            //     cout << "Checked Out successfully : ";
-            //     getCurrentTime();
-            // }
+            cout << "+=================================================================================================+" << endl;
+            cout << "|                                                                                                 |" << endl;
+            cout << "|";cout << LIGHT_PEACH;
+            cout << "                                      >>>  CHECK-OUT  <<<                                        ";cout << RESET;cout << "|" << endl;
+            cout << "|                                                                                                 |" << endl;
+            cout << "+=================================================================================================+" << endl;
 
             //getLoadingBar();
             string SERVER_URL = "http://192.168.1.246:5466/checkout";  // Check-out URL
@@ -223,34 +199,41 @@ class Employee{
             ifstream readCheckInRecords("data/checkInRecords.txt");
             if (readCheckInRecords.is_open()) {
                 string record;
-                cout << "+=====================================================+" << endl;
-                cout << "|                       CHECK-IN                      |" << endl;
-                cout << "+=====================================================+" << endl;
+                cout << "+=================================================================================================+" << endl;
+                cout << "|                                                                                                 |" << endl;
+                cout << "|";cout << LIGHT_PEACH;
+                cout << "                                       >>>  CHECK-IN  <<<                                        ";cout << RESET;cout << "|" << endl;
+                cout << "|                                                                                                 |" << endl;
+                cout << "+=================================================================================================+" << endl;
                 while(getline(readCheckInRecords, record)) {
-                    cout << "| " << record << setw(15) << "|" << endl;
+                    cout << "| " << record << setw(59) << "|" << endl;
                 }
-                cout << "+=====================================================+" << endl;
+                cout << "+=================================================================================================+" << endl;
                 readCheckInRecords.close();
             }
             else 
-                cerr << "Error : Unable to open file checkInRecords.txt" << endl;
+                cerr << BRIGHT_RED << "Error : Unable to open file checkInRecords.txt" << RESET << endl;
         }
 
         void checkOutAttendanceRecords() {
             ifstream readCheckOutRecords("data/checkOutRecords.txt");
             if (readCheckOutRecords.is_open()) {
                 string record;
-                cout << "+=====================================================+" << endl;
-                cout << "|                      CHECK-OUT                      |" << endl;
-                cout << "+=====================================================+" << endl;
+                cout << "+=================================================================================================+" << endl;
+                cout << "|                                                                                                 |" << endl;
+                cout << "|";cout << LIGHT_PEACH;
+                cout << "                                      >>>  CHECK-OUT  <<<                                        ";cout << RESET;cout << "|" << endl;
+                cout << "|                                                                                                 |" << endl;
+                cout << "+=================================================================================================+" << endl;
+
                 while(getline(readCheckOutRecords, record)) {
-                    cout << "| " << record << setw(14) << "|" << endl;
+                    cout << "| " << record << setw(58) << "|" << endl;
                 }
-                cout << "+=====================================================+" << endl;
+                cout << "+=================================================================================================+" << endl;
                 readCheckOutRecords.close();
             }
             else 
-                cerr << "Error : Unable to open file checkOutRecords.txt" << endl;
+                cerr << BRIGHT_RED << "Error : Unable to open file checkOutRecords.txt" << RESET << endl;
         }
 
         enum KEY { UP = 72, DOWN = 80, ENTER = 13 }; // Arrow keys and Enter key
@@ -258,12 +241,13 @@ class Employee{
             SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
         }
         void attendanceRecordsHighlight(int currentSelection, int totalOptions) {
-            cout << "+==============================================================================+" << endl;
-            cout << "|                                                                              |" << endl;
-            cout << "|                        >>>  ATTENDANCE RECORDS  <<<                          |" << endl;
-            cout << "|                                                                              |" << endl;
-            cout << "+==============================================================================+" << endl;
-            cout << "|                                                                              |" << endl;
+            cout << "+=================================================================================================+" << endl;
+            cout << "|                                                                                                 |" << endl;
+            cout << "|";cout << LIGHT_PEACH;
+            cout << "                                  >>>  ATTENDANCE RECORDS  <<<                                   ";cout << RESET;cout << "|" << endl;
+            cout << "|                                                                                                 |" << endl;
+            cout << "+=================================================================================================+" << endl;
+            cout << "|                                                                                                 |" << endl;
             
             string options[] = {
                 "Checked-In Records",
@@ -274,19 +258,22 @@ class Employee{
             for (int i = 0; i < totalOptions; i++) {
                 if (i == currentSelection) {
                     setConsoleTextColor(15); // Bold (White text on black background)
-                    cout << "|  =>  " << options[i] << string(62 - options[i].length(), ' ') << "          |" << endl;
+                    cout << "|  =>    " << options[i] << string(62 - options[i].length(), ' ') << "                           |" << endl;
                 } else {
                     setConsoleTextColor(8); // Normal (Gray text on black background)
-                    cout << "|      " << options[i] << string(62 - options[i].length(), ' ') << "          |" << endl;
+                    cout << "|        " << options[i] << string(62 - options[i].length(), ' ') << "                           |" << endl;
                 }
             }
             
             setConsoleTextColor(7);
 
-            cout << "|                                                                              |" << endl;
-            cout << "+==============================================================================+" << endl;
-            cout << "|                 >>>  Select an option by pressing Enter  <<<                 |" << endl;
-            cout << "+==============================================================================+" << endl; 
+            cout << "|                                                                                                 |" << endl;
+            cout << "+=================================================================================================+" << endl;
+            cout << "|";cout << LIGHT_GREEN;
+            cout << "                          >>>  Select an option by pressing Enter  <<<                           ";cout << RESET;
+            cout << "|" << endl;
+            cout << "+=================================================================================================+" << endl;
+
         }
 
     public :
@@ -308,11 +295,13 @@ class Employee{
                     case ENTER:
                         switch (currentSelection) {
                             case 0: {
+                                getLoadingBar();
                                 checkIn();
                                 system("pause");
                                 break;
                             }
                             case 1: {
+                                getLoadingBar();
                                 checkOut();
                                 system("pause");
                                 break;

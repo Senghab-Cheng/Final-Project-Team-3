@@ -8,6 +8,16 @@
 
 using namespace std;
 
+#define LIGHT_BLUE "\033[38;5;123m"
+#define BRIGHT_GREEN "\033[38;5;122m"
+#define LIGHT_GREEN "\033[92m"
+#define LIGHT_PINK "\033[38;5;217m"
+#define LIGHT_PEACH "\033[38;5;223m"
+#define CYAN "\033[36m"
+#define GREEN "\033[38;5;46m"
+#define BRIGHT_RED "\033[91m"
+#define RESET "\033[0m"        // Reset definition
+
 class Manipulate{
     private :
         enum KEY { UP = 72, DOWN = 80, ENTER = 13 }; // Arrow keys and Enter key
@@ -17,12 +27,13 @@ class Manipulate{
         }
         void listManipulate(int currentSelection, int totalOptions) {
             system("cls");
-            cout << "+===========================================================================+" << endl;
-            cout << "|                                                                           |" << endl;
-            cout << "|                          | EMPLOYEE MANAGEMENT |                          |" << endl;
-            cout << "|                                                                           |" << endl;
-            cout << "+===========================================================================+" << endl;
-            cout << "|                                                                           |" << endl;
+            cout << "+=================================================================================================+" << endl;
+            cout << "|                                                                                                 |" << endl;
+            cout << "|";cout << LIGHT_PEACH;
+            cout << "                                     >>> EMPLOYEE MANAGEMENT <<<                                 ";cout << RESET;cout << "|" << endl;
+            cout << "|                                                                                                 |" << endl;
+            cout << "+=================================================================================================+" << endl;
+            cout << "|                                                                                                 |" << endl;
             
             string options[] = {
                 "Add New Employee",
@@ -35,18 +46,20 @@ class Manipulate{
             for (int i = 0; i < totalOptions; i++) {
                 if (i == currentSelection) {
                     setConsoleTextColor(15); // Bold (White text on black background)
-                    cout << "|  =>  " << options[i] << string(62 - options[i].length(), ' ') << "       |" << endl;
+                    cout << "|  =>    " << options[i] << string(62 - options[i].length(), ' ') << "                           |" << endl;
                 } else {
                     setConsoleTextColor(8); // Normal (Gray text on black background)
-                    cout << "|      " << options[i] << string(62 - options[i].length(), ' ') << "       |" << endl;
+                    cout << "|        " << options[i] << string(62 - options[i].length(), ' ') << "                           |" << endl;
                 }
             }
 
             setConsoleTextColor(7); // Reset to normal color
-            cout << "|                                                                           |" << endl;
-            cout << "+===========================================================================+" << endl;
-            cout << "|           >>>  Please choose an option by entering a number  <<<          |" << endl;
-            cout << "+===========================================================================+" << endl;
+            cout << "|                                                                                                 |" << endl;
+            cout << "+=================================================================================================+" << endl;
+            cout << "|";cout << LIGHT_GREEN;
+            cout << "                          >>>  Select an option by pressing Enter  <<<                           ";cout << RESET;
+            cout << "|" << endl;
+            cout << "+=================================================================================================+" << endl;
         }
 
         void addEmployee() {
@@ -61,7 +74,7 @@ class Manipulate{
                 }
                 addEmployee.close(); // Close the file
             } else {
-                cout << "Unable to open the file!" << endl;
+                cerr << BRIGHT_RED << "Unable to open the file!" << RESET << endl;
             }
         }
 
@@ -110,35 +123,3 @@ class Manipulate{
             } while (true); // Loop until "Exit" is selected and Enter is pressed
         }
 };
-
-
-                // switch(key) {
-                //     case 1 : {
-                //         AddEmployee employee1a;
-                //         employee1a.setEmployeeData();
-                //         break;
-                //     }
-                //     case 2 : {
-                //         Update employee1b;
-                //         employee1b.update();
-                //         break;
-                //     }
-                //     case 3 : {
-                //         DeleteEmployee employee1c;
-                //         employee1c.manage();
-                //         break;
-                //     }
-                //     case 4 : {
-                //         BackupEmployeeData employee1d;
-                //         employee1d.backupData();
-                //         break;
-                //     }
-                //     case 0 : {
-                //         cout << "Exiting..." << endl;
-                //         break;
-                //     }
-                //     default : {
-                //         cout << "INVALID OPTION!" << endl;
-                //         break;
-                //     }
-                // }

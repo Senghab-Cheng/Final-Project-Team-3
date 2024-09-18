@@ -31,6 +31,13 @@ vector<int> employeeIDsBackupX;
 vector<string> employeeRolesBackupX;
 
 #define LIGHT_BLUE "\033[38;5;123m"
+#define BRIGHT_GREEN "\033[38;5;122m"
+#define LIGHT_GREEN "\033[92m"
+#define LIGHT_PINK "\033[38;5;217m"
+#define LIGHT_PEACH "\033[38;5;223m"
+#define CYAN "\033[36m"
+#define GREEN "\033[38;5;46m"
+#define BRIGHT_RED "\033[91m"
 #define RESET "\033[0m"        // Reset definition
 
 enum KEY { UP = 72, DOWN = 80, ENTER = 13 }; // Arrow keys and Enter key
@@ -39,13 +46,15 @@ void setConsoleTextColor(int color) {
 }
 
 void listForAdminOrEmployee(int currentSelection, int totalOptions) {
-    //cout << LIGHT_BLUE;
-    cout << "+============================================================================+" << endl;
-    cout << "|                                                                            |" << endl;
-    cout << "|                          | MANAGEMENT SYSTEM |                             |" << endl;
-    cout << "|                                                                            |" << endl;
-    cout << "+============================================================================+" << endl;
-    cout << "|                                                                            |" << endl;
+    
+    cout << "+=================================================================================================+" << endl;
+    cout << "|                                                                                                 |" << endl;
+    cout << "|"; cout << LIGHT_PEACH; 
+    cout << "                                   >>> MANAGEMENT SYSTEM <<<                                     ";cout << RESET;
+    cout << "|" << endl;
+    cout << "|                                                                                                 |" << endl;
+    cout << "+=================================================================================================+" << endl;
+    cout << "|                                                                                                 |" << endl;
    
     string options[] = {
         "Administrator",
@@ -56,27 +65,31 @@ void listForAdminOrEmployee(int currentSelection, int totalOptions) {
     for (int i = 0; i < totalOptions; i++) {
             if (i == currentSelection) {
                 setConsoleTextColor(15); // Bold (White text on black background)
-                cout << "|  =>  " << options[i] << string(62 - options[i].length(), ' ') << "        |" << endl;
+                cout << "|  =>    " << options[i] << string(62 - options[i].length(), ' ') << "                           |" << endl;
             } else {
                 setConsoleTextColor(8); // Normal (Gray text on black background)
-                cout << "|      " << options[i] << string(62 - options[i].length(), ' ') << "        |" << endl;
+                cout << "|        " << options[i] << string(62 - options[i].length(), ' ') << "                           |" << endl;
             }
-    }
+        }
 
     setConsoleTextColor(7);
-    cout << "|                                                                            |" << endl;
-    cout << "+============================================================================+" << endl;
-    cout << "|                >>>  Select an option by pressing Enter  <<<                |" << endl;
-    cout << "+============================================================================+" << endl;
+    cout << "|                                                                                                 |" << endl;
+    cout << "+=================================================================================================+" << endl;
+    cout << "|";cout << LIGHT_GREEN;
+    cout << "                          >>>  Select an option by pressing Enter  <<<                           ";cout << RESET;
+    cout << "|" << endl;
+    cout << "+=================================================================================================+" << endl;
+    
 }
 
 void adminMenu(int currentSelection, int totalOptions) {
-    cout << "+===========================================================================+" << endl;
-    cout << "|                                                                           |" << endl;
-    cout << "|                                | ADMIN PANEL |                            |" << endl;
-    cout << "|                                                                           |" << endl;
-    cout << "+===========================================================================+" << endl;
-    cout << "|                                                                           |" << endl;
+    cout << "+=================================================================================================+" << endl;
+    cout << "|                                                                                                 |" << endl;
+    cout << "|";cout << LIGHT_PEACH;
+    cout << "                                       >>> ADMIN PANEL <<<                                       ";cout << RESET; cout << "|" << endl;
+    cout << "|                                                                                                 |" << endl;
+    cout << "+=================================================================================================+" << endl;
+    cout << "|                                                                                                 |" << endl;
     
     string options[] = {
         "View Employee List",
@@ -84,25 +97,28 @@ void adminMenu(int currentSelection, int totalOptions) {
         "Employee Management",
         "Search For Employee",
         "Admin Profile Settings",
-        "Exiting"
+        "Exit"
     };
     
     for (int i = 0; i < totalOptions; i++) {
         if (i == currentSelection) {
             setConsoleTextColor(15); // Bold (White text on black background)
-            cout << "|  =>  " << options[i] << string(62 - options[i].length(), ' ') << "       |" << endl;
+            cout << "|  =>    " << options[i] << string(62 - options[i].length(), ' ') << "                           |" << endl;
         } else {
             setConsoleTextColor(8); // Normal (Gray text on black background)
-            cout << "|      " << options[i] << string(62 - options[i].length(), ' ') << "       |" << endl;
+            cout << "|        " << options[i] << string(62 - options[i].length(), ' ') << "                           |" << endl;
         }
     }
     
     setConsoleTextColor(7);
 
-    cout << "|                                                                           |" << endl;
-    cout << "+===========================================================================+" << endl;
-    cout << "|               >>>  Select an option by pressing Enter  <<<                |" << endl;
-    cout << "+===========================================================================+" << endl;
+    cout << "|                                                                                                 |" << endl;
+    cout << "+=================================================================================================+" << endl;
+    cout << "|";cout << LIGHT_GREEN;
+    cout << "                          >>>  Select an option by pressing Enter  <<<                           ";cout << RESET;
+    cout << "|" << endl;
+    cout << "+=================================================================================================+" << endl;
+
 
 }
 
@@ -118,7 +134,7 @@ void adminPanel() {
         }
         adminPanel.close(); // Close the file
     } else {
-        cout << "Unable to open the file!" << endl;
+        cerr << BRIGHT_RED << "Unable to open the file!" << RESET << endl;
     }
 }
 
@@ -134,7 +150,7 @@ void ManagementSystem() {
         }
         employeeManagement.close(); // Close the file
     } else {
-        cout << "Unable to open the file!" << endl;
+        cerr << BRIGHT_RED << "Unable to open the file!" << RESET << endl;
     }
 }
 
@@ -150,7 +166,7 @@ void ViewEmployeeList() {
         }
         menuFile.close(); // Close the file
     } else {
-        cout << "Unable to open the file!" << endl;
+        cerr << BRIGHT_RED << "Unable to open the file!" << RESET << endl;
     }
 }
 
@@ -166,7 +182,7 @@ void employeeManagement() {
         }
         employeeManagement.close(); // Close the file
     } else {
-        cout << "Unable to open the file!" << endl;
+        cerr << BRIGHT_RED << "Unable to open the file!" << RESET << endl;
     }
 }
 
@@ -182,7 +198,7 @@ void searchForEmployee() {
         }
         searchForEmployee.close(); // Close the file
     } else {
-        cout << "Unable to open the file!" << endl;
+        cerr << BRIGHT_RED << "Unable to open the file!" << RESET << endl;
     }
 }
 
@@ -198,7 +214,25 @@ void adminProfileSetting() {
         }
         adminProfileSetting.close(); // Close the file
     } else {
-        cout << "Unable to open the file!" << endl;
+        cerr << BRIGHT_RED << "Unable to open the file!" << RESET << endl;
+    }
+}
+
+void istad() {
+    ifstream istad("style/istad.txt"); // Open the file for reading
+
+    if(istad.is_open()) {
+        string line;
+        // Read line by line from the file
+        cout << BRIGHT_GREEN;
+        while(getline(istad, line)) {
+            cout << line << endl; // Print each line to the console
+            //this_thread::sleep_for(chrono::milliseconds(80)); // Delay of 100 milliseconds
+        }
+        istad.close(); // Close the file
+        cout << RESET;
+    } else {
+        cerr << BRIGHT_RED << "Unable to open the file!" << RESET << endl;
     }
 }
 
@@ -206,9 +240,10 @@ void ui() {
     int currentSelection = 0;
     const int totalOptions = 3;
     char key;
-
+    
     while (true) {
         system("cls"); // Clear the console
+        istad();
         listForAdminOrEmployee(currentSelection, totalOptions);
         key = _getch(); // Capture key press
 
@@ -226,8 +261,9 @@ void ui() {
                 if (currentSelection == 0) { // Administrator
                     Login admin1;
                     if (admin1.userLogin()) { // Check if login is successful
+                        cout << LIGHT_GREEN << "Login successful. Displaying admin menu..." << RESET << endl; // Debug output
+                        getLoadingBar();
                         system("cls"); // Clear the console before showing the admin menu
-                        cout << "Login successful. Displaying admin menu..." << endl; // Debug output
                         int currentSelection2 = 0;
                         const int totalOptions2 = 6;
                         char key2;
@@ -259,20 +295,20 @@ void ui() {
                                             break;
                                         }
                                         case 2: {
-                                            employeeManagement();
+                                            //employeeManagement();
                                             Manipulate emp2;
                                             emp2.manipulate();
                                             break;
                                         }
                                         case 3: {
-                                            searchForEmployee();
-                                            this_thread::sleep_for(chrono::milliseconds(700));
+                                            //searchForEmployee();
+                                            //this_thread::sleep_for(chrono::milliseconds(700));
                                             SearchEmployee emp3;
                                             emp3.searchEmployee();
                                             break;
                                         }
                                         case 4: {
-                                            adminProfileSetting();
+                                            //adminProfileSetting();
                                             ProfileSetting emp4;
                                             emp4.profileSettings();
                                             break;
@@ -282,10 +318,6 @@ void ui() {
                                             isExit = 1;
                                             break;
                                             //break; // Exit the program
-                                        }
-                                        default: {
-                                            cout << "INVALID OPTION!" << endl;
-                                            break;
                                         }
                                     }
                                     break;
@@ -297,13 +329,12 @@ void ui() {
                             // if (key2 == 5) break; // Break the loop if "Exiting" is selected
                         }
                     } else {
-                        cout << "Login failed. Please try again." << endl;
+                        cout << BRIGHT_RED << "Login failed. Please try again." << RESET << endl;
                         this_thread::sleep_for(chrono::seconds(2)); // Pause before retry
                     }
                 } else if (currentSelection == 1) { // Employee Portal
                     Employee emp;
                     emp.checkInCheckOut();
-                    cout << "Employee Portal is not implemented yet." << endl;
                 } else if (currentSelection == 2) { // Exit
                     cout << "Exiting..." << endl;
                     return; // Exit the program
@@ -313,7 +344,6 @@ void ui() {
             default:
                 break; // Ignore other keys
         }
-
         // Add a small delay to ensure the console has time to update
         this_thread::sleep_for(chrono::milliseconds(15));
     }

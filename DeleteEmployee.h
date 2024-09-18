@@ -10,6 +10,16 @@
 
 using namespace std;
 
+#define LIGHT_BLUE "\033[38;5;123m"
+#define BRIGHT_GREEN "\033[38;5;122m"
+#define LIGHT_GREEN "\033[92m"
+#define LIGHT_PINK "\033[38;5;217m"
+#define LIGHT_PEACH "\033[38;5;223m"
+#define CYAN "\033[36m"
+#define GREEN "\033[38;5;46m"
+#define BRIGHT_RED "\033[91m"
+#define RESET "\033[0m"        // Reset definition
+
 // Declaration of external backup vectors
 extern vector<string> employeeNamesBackupX;
 extern vector<string> employeeRolesBackupX;
@@ -20,7 +30,7 @@ class DeleteEmployee {
 
 public:
     void manage() {
-        //loadEmployeeData(); // Load data from files before managing deletions
+        loadEmployeeData(); // Load data from files before managing deletions
         int currentSelection = 0;
         const int totalOptions = 3;
         char key;
@@ -96,8 +106,10 @@ private:
 
     void deleteEmployeeById() {
         int id;
-        cout << "[+] Enter employee ID to delete: ";
+        cout << CYAN << "[+] Enter employee ID to delete: " << RESET;
+        cout << LIGHT_GREEN;
         cin >> id;
+        cout << RESET;
 
         auto itID = find(employeeIDs.begin(), employeeIDs.end(), id);
         if (itID != employeeIDs.end()) {
@@ -114,18 +126,20 @@ private:
 
             // Save updated vectors to the files
             updateEmployeeFiles();
-
-            cout << "Employee with ID " << id << " deleted successfully." << endl;
+            getLoadingBar();
+            cout << LIGHT_GREEN << "Employee with ID " << id << " deleted successfully." << RESET << endl;
         } else {
-            cout << "Employee with ID " << id << " not found." << endl;
+            cerr << BRIGHT_RED << "Employee with ID " << id << " not found." << RESET << endl;
         }
     }
 
     void deleteEmployeeByUsername() {
         string username;
-        cout << "[+] Enter employee Username to delete: ";
+        cout << CYAN << "[+] Enter employee Username to delete: " << RESET;
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        cout << LIGHT_GREEN;
         getline(cin, username);
+        cout << RESET;
 
         auto itName = find(employeeNames.begin(), employeeNames.end(), username);
         if (itName != employeeNames.end()) {
@@ -142,10 +156,10 @@ private:
 
             // Save updated vectors to the files
             updateEmployeeFiles();
-
-            cout << "Employee with username \"" << username << "\" deleted successfully." << endl;
+            getLoadingBar();
+            cout << LIGHT_GREEN << "Employee with username \"" << username << "\" deleted successfully." << RESET << endl;
         } else {
-            cout << "Employee with username \"" << username << "\" not found." << endl;
+            cerr << BRIGHT_RED << "Employee with username \"" << username << "\" not found." << RESET << endl;
         }
     }
 
@@ -161,7 +175,7 @@ private:
             salaryFile << employeeSalaries[index] << '\n';
             roleFile << employeeRoles[index] << '\n';
         } else {
-            cerr << "Error: Unable to open backup files for writing." << endl;
+            cerr << BRIGHT_RED << "Error: Unable to open backup files for writing." << RESET << endl;
         }
 
         nameFile.close();
@@ -208,12 +222,13 @@ private:
 
     void listForDelete(int currentSelection, int totalOptions) {
         
-        cout << "+================================================================================+" << endl;
-        cout << "|                                                                                |" << endl;
-        cout << "|                             >>>  DELETE EMPLOYEE  <<<                          |" << endl;
-        cout << "|                                                                                |" << endl;
-        cout << "+================================================================================+" << endl;
-        cout << "|                                                                                |" << endl;
+        cout << "+=================================================================================================+" << endl;
+        cout << "|                                                                                                 |" << endl;
+        cout << "|";cout << LIGHT_PEACH;
+        cout << "                                     >>>  DELETE EMPLOYEE  <<<                                   ";cout << RESET;cout << "|" << endl;
+        cout << "|                                                                                                 |" << endl;
+        cout << "+=================================================================================================+" << endl;
+        cout << "|                                                                                                 |" << endl;
         
         string options[] = {
             "Delete Employee By ID",
@@ -221,20 +236,22 @@ private:
             "Exit"
         };
 
-                for (int i = 0; i < totalOptions; i++) {
+        for (int i = 0; i < totalOptions; i++) {
             if (i == currentSelection) {
                 setConsoleTextColor(15); // Bold (White text on black background)
-                cout << "|  =>  " << options[i] << string(62 - options[i].length(), ' ') << "          |" << endl;
+                cout << "|  =>    " << options[i] << string(62 - options[i].length(), ' ') << "                           |" << endl;
             } else {
                 setConsoleTextColor(8); // Normal (Gray text on black background)
-                cout << "|      " << options[i] << string(62 - options[i].length(), ' ') << "          |" << endl;
+                cout << "|        " << options[i] << string(62 - options[i].length(), ' ') << "                           |" << endl;
             }
         }
 
         setConsoleTextColor(7); // Reset to normal color
-        cout << "|                                                                                |" << endl;
-        cout << "+================================================================================+" << endl;
-        cout << "|                  >>>  Select an option by pressing enter  <<<                  |" << endl;
-        cout << "+================================================================================+" << endl;
-    }
+        cout << "|                                                                                                 |" << endl;
+        cout << "+=================================================================================================+" << endl;
+        cout << "|";cout << LIGHT_GREEN;
+        cout << "                          >>>  Select an option by pressing Enter  <<<                           ";cout << RESET;
+        cout << "|" << endl;
+        cout << "+=================================================================================================+" << endl;
+       }
 };

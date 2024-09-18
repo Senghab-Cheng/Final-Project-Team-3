@@ -5,8 +5,19 @@
 #include <algorithm>  // for max_element
 #include <fstream>
 #include "Globals.h"
+#include "loadingBar.h"
 
 using namespace std;
+
+#define LIGHT_BLUE "\033[38;5;123m"
+#define BRIGHT_GREEN "\033[38;5;122m"
+#define LIGHT_GREEN "\033[92m"
+#define LIGHT_PINK "\033[38;5;217m"
+#define LIGHT_PEACH "\033[38;5;223m"
+#define CYAN "\033[36m"
+#define GREEN "\033[38;5;46m"
+#define BRIGHT_RED "\033[91m"
+#define RESET "\033[0m"        // Reset definition
 
 // Vectors holding employee data
 extern vector<string> employeeNames;
@@ -36,7 +47,7 @@ private:
             file << name << '\n';
             file.close();
         } else {
-            cerr << "Error: Unable to open file employeeNameFile.txt" << endl;
+            cerr << BRIGHT_RED << "Error: Unable to open file employeeNameFile.txt" << RESET << endl;
         }
     }
 
@@ -46,7 +57,7 @@ private:
             file << id << '\n';
             file.close();
         } else {
-            cerr << "Error: Unable to open file employeeIDFile.txt" << endl;
+            cerr << BRIGHT_RED << "Error: Unable to open file employeeIDFile.txt" << RESET << endl;
         }
     }
 
@@ -56,7 +67,7 @@ private:
             file << position << '\n';
             file.close();
         } else {
-            cerr << "Error: Unable to open file employeePositionFile.txt" << endl;
+            cerr << BRIGHT_RED << "Error: Unable to open file employeePositionFile.txt" << RESET << endl;
         }
     }
 
@@ -66,7 +77,7 @@ private:
             file << salary << '\n';
             file.close();
         } else {
-            cerr << "Error: Unable to open file employeeSalaryFile.txt" << endl;
+            cerr << BRIGHT_RED << "Error: Unable to open file employeeSalaryFile.txt" << RESET << endl;
         }
     }
 
@@ -88,7 +99,7 @@ public:
             }
             readName.close();
         } else {
-            cerr << "Error: Unable to open file employeeNameFile.txt" << endl;
+            cerr << BRIGHT_RED << "Error: Unable to open file employeeNameFile.txt" << RESET << endl;
         }
 
         ifstream readID("data/employeeIDFile.txt");
@@ -99,7 +110,7 @@ public:
             }
             readID.close();
         } else {
-            cerr << "Error: Unable to open file employeeIDFile.txt" << endl;
+            cerr << BRIGHT_RED << "Error: Unable to open file employeeIDFile.txt" << RESET << endl;
         }
 
         ifstream readSalary("data/employeeSalaryFile.txt");
@@ -110,7 +121,7 @@ public:
             }
             readSalary.close();
         } else {
-            cerr << "Error: Unable to open file employeeSalaryFile.txt" << endl;
+            cerr << BRIGHT_RED << "Error: Unable to open file employeeSalaryFile.txt" << RESET << endl;
         }
 
         ifstream readPosition("data/employeePositionFile.txt");
@@ -123,7 +134,7 @@ public:
             }
             readPosition.close();
         } else {
-            cerr << "Error: Unable to open file employeePositionFile.txt" << endl;
+            cerr << BRIGHT_RED << "Error: Unable to open file employeePositionFile.txt" << RESET << endl;
         }
     }
 
@@ -133,16 +144,21 @@ public:
     }
 
     void setEmployeeData() {
-        cout << "+============================================================================+" << endl;
-        cout << "|                                                                            |" << endl;
-        cout << "|                          | SET EMPLOYEE DATA |                             |" << endl;
-        cout << "|                                                                            |" << endl;
-        cout << "+============================================================================+" << endl;
+        cout << "+=================================================================================================+" << endl;
+        cout << "|                                                                                                 |" << endl;
+        cout << "|";cout << LIGHT_PEACH;
+        cout << "                                       | SET EMPLOYEE DATA |                                     ";cout << RESET;cout << "|" << endl;
+        cout << "|                                                                                                 |" << endl;
+        cout << "+=================================================================================================+" << endl;
 
         // Enter employee name
+        cout << CYAN;
         cout << "[+] Enter employee Name: ";
-        cin.ignore(); // To ignore any leftover newline characters from previous input
+        cout << RESET;
+        //cin.ignore(); // To ignore any leftover newline characters from previous input
+        cout << LIGHT_GREEN;
         getline(cin, employeeName);
+        cout << RESET;
         setNameToFile(employeeName);
         employeeNames.push_back(employeeName);
 
@@ -150,23 +166,30 @@ public:
         employeeID = generateNextID();
         setIDToFile(employeeID);
         employeeIDs.push_back(employeeID);
-        cout << "[+] Generated employee ID: " << employeeID << endl;
+        cout << CYAN << "[+] Generated employee ID: " << RESET << LIGHT_GREEN << employeeID <<  RESET << endl;
 
         // Enter employee position
+        cout << CYAN;
         cout << "[+] Enter employee Position: ";
+        cout << RESET;
+        cout << LIGHT_GREEN;
         getline(cin, employeePosition);
+        cout << RESET;
         setPositionToFile(employeePosition);
         employeeRoles.push_back(employeePosition);
 
         // Enter employee salary
-        cout << "[+] Enter employee Salary: ";
+        cout << CYAN << "[+] Enter employee Salary: " << RESET;
+        cout << LIGHT_GREEN;
         cin >> employeeSalary;
+        cout << RESET;
+        getLoadingBar();
         if (isValidSalary(employeeSalary)) {
             setSalaryToFile(employeeSalary);
-            cout << "Employee added successfully." << endl;
+            cout << LIGHT_GREEN << "Employee added successfully." << RESET << endl;
             employeeSalaries.push_back(employeeSalary);
         } else {
-            cerr << "Error: Invalid salary input." << endl;
+            cerr << BRIGHT_RED << "Error: Invalid salary input." << RESET << endl;
         }
             system("pause");
     }

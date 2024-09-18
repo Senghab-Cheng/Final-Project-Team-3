@@ -1,6 +1,6 @@
-Username: ABC
-Email: abc123@gmail.com
-Password: 12345
+Username: abc
+Email: @gmail.com
+Password: 123
 Bio: No idea
 Tel: 0123456789
 Telegram: ABC

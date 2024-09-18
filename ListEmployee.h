@@ -16,6 +16,16 @@
 
 using namespace std;
 
+#define LIGHT_BLUE "\033[38;5;123m"
+#define BRIGHT_GREEN "\033[38;5;122m"
+#define LIGHT_GREEN "\033[92m"
+#define LIGHT_PINK "\033[38;5;217m"
+#define LIGHT_PEACH "\033[38;5;223m"
+#define CYAN "\033[36m"
+#define GREEN "\033[38;5;46m"
+#define BRIGHT_RED "\033[91m"
+#define RESET "\033[0m"        // Reset definition
+
 class ListEmployees {
 private:
     vector<string> employeeNames;
@@ -52,6 +62,7 @@ private:
     }
 
     void listAllEmployees() {
+        getLoadingBar();
         cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
         cout << "| ID         | NAME                            | ROLE                    | SALARY                 |" << endl;
         cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
@@ -68,54 +79,79 @@ private:
         vector<string> roles = employeeRoles;
         sort(roles.begin(), roles.end());
         roles.erase(unique(roles.begin(), roles.end()), roles.end());
-
+        cout << "===================================================================================================" << endl;
         cout << "Department : " << endl;
         for (const auto& role : roles) {
             int count = count_if(employeeRoles.begin(), employeeRoles.end(), [&role](const string& r) { return r == role; });
             cout << role << " " << count << endl;
         }
-        cout << endl << "Employee : " << employeeRoles.size() << endl;
+        cout << "===================================================================================================" << endl;
+        cout << "Employee : " << employeeRoles.size() << endl;
+        cout << "===================================================================================================" << endl;
     }
 
-    void listEmployeeByPart() {
-        vector<string> roles = employeeRoles;
+    // Function to convert a string to uppercase
+    void toUpperCase(std::string &input) {
+        std::transform(input.begin(), input.end(), input.begin(), ::toupper);
+    }
+
+    void listEmployeeByPart(/*const std::vector<std::string>& employeeRoles, 
+                                      const std::vector<std::string>& employeeNames,
+                                      const std::vector<int>& employeeIDs, 
+                                      const std::vector<double>& employeeSalaries*/) {
+        // Remove duplicate roles and sort
+        std::vector<std::string> roles = employeeRoles;
         sort(roles.begin(), roles.end());
         roles.erase(unique(roles.begin(), roles.end()), roles.end());
 
-        cout << "Department : " << endl;
+        // Display department options
+        std::cout << std::endl;
+        std::cout << "===================================================================================================" << std::endl;
+        std::cout << "Department : ";
         for (const auto& role : roles) {
-            cout << role << endl;
+            std::cout << role << "   ";
         }
-        cout << endl;
-        string department;
-        cout << "Enter employee department: ";
-        //cin.ignore();
-        getline(cin, department);
-        system("cls");
+        std::cout << std::endl;
+        std::cout << "===================================================================================================" << std::endl;
+
+        // Get department input from the user
+        std::string department;
+        std::cout << CYAN << "Enter employee department: " << RESET;
+        cout << LIGHT_GREEN;
+        getline(std::cin, department);
+        cout << RESET;
+
+        // Convert department input to uppercase
+        toUpperCase(department);
+        getLoadingBar();
+        // Display table header
+        std::cout << "+------------+---------------------------------+-------------------------+------------------------+" << std::endl;
+        std::cout << "| ID         | NAME                            | ROLE                    | SALARY                 |" << std::endl;
+        std::cout << "+------------+---------------------------------+-------------------------+------------------------+" << std::endl;
 
         int count = 0;
         bool isFound = false;
 
-        cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
-        cout << "| ID         | NAME                            | ROLE                    | SALARY                 |" << endl;
-        cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
-
+        // Iterate through the employees and display those that match the department
         for (size_t i = 0; i < employeeNames.size(); i++) {
-            if (department == employeeRoles[i]) {
+            std::string roleUpperCase = employeeRoles[i];  // Copy the current role
+            toUpperCase(roleUpperCase);  // Convert role to uppercase
+
+            if (department == roleUpperCase) {
                 count++;
                 isFound = true;
-                cout << "| " << setw(11) << left << employeeIDs[i]
-                     << "| " << setw(32) << left << employeeNames[i]
-                     << "| " << setw(24) << left << employeeRoles[i]
-                     << "| " << right << fixed << setprecision(2) << employeeSalaries[i] << "$" << setw(16) << " |" << endl;
+                std::cout << "| " << std::setw(11) << std::left << employeeIDs[i]
+                          << "| " << std::setw(32) << std::left << employeeNames[i]
+                          << "| " << std::setw(24) << std::left << employeeRoles[i]
+                          << "| " << std::right << std::fixed << std::setprecision(2) << employeeSalaries[i] << "$" << std::setw(16) << " |" << std::endl;
             }
         }
 
-        cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
+        std::cout << "+------------+---------------------------------+-------------------------+------------------------+" << std::endl;
         if (isFound) 
-            cout << department << " " << count << endl;
+            std::cout << department << " department has " << count << " employees." << std::endl;
         else 
-            cout << department << " not found." << endl;
+            std::cout << BRIGHT_RED << department << " department not found." << RESET << std::endl;
     }
 
     enum KEY { UP = 72, DOWN = 80, ENTER = 13 }; // Arrow keys and Enter key
@@ -126,12 +162,13 @@ private:
 
     void highlightListMenu(int currentSelection, int totalOptions) {
         
-        cout << "+==============================================================================+" << endl;
-        cout << "|                                                                              |" << endl;
-        cout << "|                            >>>  LIST EMPLOYEES  <<<                          |" << endl;
-        cout << "|                                                                              |" << endl;
-        cout << "+==============================================================================+" << endl;
-        cout << "|                                                                              |" << endl;
+        cout << "+=================================================================================================+" << endl;
+        cout << "|                                                                                                 |" << endl;
+        cout << "|";cout << LIGHT_PEACH;
+        cout << "                                    >>>  LIST EMPLOYEES  <<<                                     ";cout << RESET;cout << "|" << endl;
+        cout << "|                                                                                                 |" << endl;
+        cout << "+=================================================================================================+" << endl;
+        cout << "|                                                                                                 |" << endl;
 
         string options[] = {
             "List Employees By Departments",
@@ -142,18 +179,21 @@ private:
         for (int i = 0; i < totalOptions; i++) {
             if (i == currentSelection) {
                 setConsoleTextColor(15); // Bold (White text on black background)
-                cout << "|  =>  " << options[i] << string(62 - options[i].length(), ' ') << "          |" << endl;
+                cout << "|  =>    " << options[i] << string(62 - options[i].length(), ' ') << "                           |" << endl;
             } else {
                 setConsoleTextColor(8); // Normal (Gray text on black background)
-                cout << "|      " << options[i] << string(62 - options[i].length(), ' ') << "          |" << endl;
+                cout << "|        " << options[i] << string(62 - options[i].length(), ' ') << "                           |" << endl;
             }
         }
 
         setConsoleTextColor(7); // Reset to normal color
-        cout << "|                                                                              |" << endl;
-        cout << "+==============================================================================+" << endl;
-        cout << "|              >>>  Select an option by pressing Enter  <<<                    |" << endl;
-        cout << "+==============================================================================+" << endl;
+        cout << "|                                                                                                 |" << endl;
+        cout << "+=================================================================================================+" << endl;
+        cout << "|";cout << LIGHT_GREEN;
+        cout << "                          >>>  Select an option by pressing Enter  <<<                           ";cout << RESET;
+        cout << "|" << endl;
+        cout << "+=================================================================================================+" << endl;
+
     }
 
     void department() {
@@ -166,7 +206,7 @@ private:
                 this_thread::sleep_for(chrono::milliseconds(80));
             }
         } else {
-            cerr << "Unable to open the file!" << endl;
+            cerr << BRIGHT_RED << "Unable to open the file!" << RESET << endl;
         }
     }
 
@@ -180,7 +220,7 @@ private:
                 this_thread::sleep_for(chrono::milliseconds(80));
             }
         } else {
-            cerr << "Unable to open the file!" << endl;
+            cerr << BRIGHT_RED << "Unable to open the file!" << RESET << endl;
         }
     }
 

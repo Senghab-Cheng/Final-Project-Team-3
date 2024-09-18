@@ -4,11 +4,24 @@
 #include <fstream>
 #include <vector>
 #include <algorithm>
+#include <conio.h>
+#include <Windows.h>
+
 #include "DeleteEmployee.h"
 #include "AddEmployee.h"
 #include "loadingBar.h"
 
 using namespace std;
+
+#define LIGHT_BLUE "\033[38;5;123m"
+#define BRIGHT_GREEN "\033[38;5;122m"
+#define LIGHT_GREEN "\033[92m"
+#define LIGHT_PINK "\033[38;5;217m"
+#define LIGHT_PEACH "\033[38;5;223m"
+#define CYAN "\033[36m"
+#define GREEN "\033[38;5;46m"
+#define BRIGHT_RED "\033[91m"
+#define RESET "\033[0m"        // Reset definition
 
 // Declaration of external backup vectors to avoid multiple definitions
 extern vector<string> employeeNamesBackupX;
@@ -17,7 +30,7 @@ extern vector<int> employeeIDsBackupX;
 extern vector<double> employeeSalariesBackupX;
 
 class BackupDataFunctions {
-public:
+protected:
     virtual void listBackupData() = 0;
     virtual void emptyData() = 0;
     virtual void restoreDataByID() = 0;
@@ -101,23 +114,52 @@ private:
             //cout << "No backup data available." << endl;
             return;
         }
+        
+        cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
+        cout << "| ID         | NAME                            | ROLE                    | SALARY                 |" << endl;
+        cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
+
         for (size_t i = 0; i < employeeIDsBackupX.size(); ++i) {
-            cout << "Name: " << employeeNamesBackupX[i] << endl;
-            cout << "ID: " << employeeIDsBackupX[i] << endl;
-            cout << "Role: " << employeeRolesBackupX[i] << endl;
-            cout << "Salary: " << employeeSalariesBackupX[i] << "$" << endl << endl;
+            cout << "| " << setw(11) << left << employeeIDsBackupX[i]
+                 << "| " << setw(32) << left << employeeNamesBackupX[i]
+                 << "| " << setw(24) << left << employeeRolesBackupX[i]
+                 << "| " << right << fixed << setprecision(2) << employeeSalariesBackupX[i] << "$" << setw(16) << " |" << endl;
         }
+
+        cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
+
+        vector<string> roles = employeeRolesBackupX;
+        sort(roles.begin(), roles.end());
+        roles.erase(unique(roles.begin(), roles.end()), roles.end());
+        cout << "===================================================================================================" << endl;
+        cout << "Department : " << endl;
+        for (const auto& role : roles) {
+            int count = count_if(employeeRolesBackupX.begin(), employeeRolesBackupX.end(), [&role](const string& r) { return r == role; });
+            cout << role << " " << count << endl;
+        }
+        cout << "===================================================================================================" << endl;
+        cout << "Employee : " << employeeRolesBackupX.size() << endl;
+        cout << "===================================================================================================" << endl;
+            // cout << "Name: " << employeeNamesBackupX[i] << endl;
+            // cout << "ID: " << employeeIDsBackupX[i] << endl;
+            // cout << "Role: " << employeeRolesBackupX[i] << endl;
+            // cout << "Salary: " << employeeSalariesBackupX[i] << "$" << endl << endl;
+        
     }
 
     void emptyData() override {
         listBackupData();
         if (employeeIDsBackupX.empty()) {
-            cout << "No backup data available." << endl;
+            cerr << BRIGHT_RED << "No backup data available." << RESET << endl;
             return;
         }
         char choice;
+        cout << CYAN;
         cout << "Are you sure you want to empty backup data? [Y/N] : ";
+        cout << RESET;
+        cout << LIGHT_GREEN;
         cin >> choice;
+        cout << RESET;
 
         if (choice == 'y' || choice == 'Y') {
             employeeNamesBackupX.clear();
@@ -125,28 +167,34 @@ private:
             employeeRolesBackupX.clear();
             employeeSalariesBackupX.clear();
             saveBackupData(); // Clear the backup files
-            cout << "Backup data has been successfully emptied." << endl;
+            getLoadingBar();
+            cerr << LIGHT_GREEN << "Backup data has been successfully emptied." << RESET << endl;
         }
+        else return;
     }
 
     void restoreDataByID() override {
-        //loadBackupData();
+        loadBackupData();
         listBackupData();
         if (employeeIDsBackupX.empty()) {
-            cout << "No backup data available." << endl;
+            cerr << BRIGHT_RED << "No backup data available."<< RESET << endl;
             return;
         }
         int id;
+        cout << CYAN;
         cout << "[+] Enter the employee ID to restore the data: ";
+        cout << RESET;
+        cout << LIGHT_GREEN;
         cin >> id;
+        cout << RESET;
 
 
         auto it = find(employeeIDsBackupX.begin(), employeeIDsBackupX.end(), id);
+        getLoadingBar();
         if (it != employeeIDsBackupX.end()) {
             size_t i = distance(employeeIDsBackupX.begin(), it);
             saveRestoredDataToAddFiles(employeeNamesBackupX[i], employeeIDsBackupX[i], employeeSalariesBackupX[i], employeeRolesBackupX[i]);
-
-            cout << "Data has been successfully restored back to AddEmployee files." << endl;
+            cout << LIGHT_GREEN << "Data has been successfully restored back to AddEmployee files." << RESET << endl;
 
             // Remove the restored employee from the backup
             employeeNamesBackupX.erase(employeeNamesBackupX.begin() + i);
@@ -156,19 +204,23 @@ private:
 
             saveBackupData(); // Save the updated backup data
         } else {
-            cout << "Employee with ID " << id << " not found." << endl;
+            cerr << BRIGHT_RED << "Employee with ID " << id << " not found." << RESET << endl;
         }
     }
 
     void restoreAllData() override {
         listBackupData();
         if (employeeIDsBackupX.empty()) {
-            cout << "No backup data available." << endl;
+            cerr << BRIGHT_RED << "No backup data available." << RESET << endl;
             return;
         }
         char choice;
+        cout << CYAN;
         cout << "Are you sure you want to restore all data? [Y/N] : ";
+        cout << RESET;
+        cout << LIGHT_GREEN;
         cin >> choice;
+        cout << RESET;
 
         if (choice == 'Y' || choice == 'y') {
             // if (employeeIDsBackupX.empty()) {
@@ -179,8 +231,8 @@ private:
             for (size_t i = 0; i < employeeIDsBackupX.size(); ++i) {
                 saveRestoredDataToAddFiles(employeeNamesBackupX[i], employeeIDsBackupX[i], employeeSalariesBackupX[i], employeeRolesBackupX[i]);
             }
-
-            cout << "All data has been successfully restored back to AddEmployee files." << endl;
+            getLoadingBar();
+            cout << LIGHT_GREEN << "All data has been successfully restored back to AddEmployee files." << RESET << endl;
 
             employeeNamesBackupX.clear();
             employeeIDsBackupX.clear();
@@ -189,49 +241,90 @@ private:
 
             saveBackupData(); // Save the updated (empty) backup data
         }
+        else return;
     }
 
 public:
     void backupData() {
-        short option;
+        int currentSelection = 0;
+        const int totalOptions = 4;
+        char key;
         do {
-            listMenuBackupData();
-            cout << "[+] Enter your option: ";
-            cin >> option;
-
-            switch (option) {
-            case 1:
-                restoreDataByID();
-                break;
-            case 2:
-                restoreAllData();
-                break;
-            case 3:
-                emptyData();
-                break;
-            case 0:
-                cout << "Exiting..." << endl;
-                break;
-            default:
-                cout << "INVALID OPTION!" << endl;
-                break;
+            system("cls");
+            listMenuBackupData(currentSelection, totalOptions);
+            key = _getch();
+            switch (key) {
+                case UP:
+                    if (currentSelection > 0) currentSelection--; // Move up
+                    break;
+                case DOWN:
+                    if (currentSelection < totalOptions - 1) currentSelection++; // Move down
+                    break;
+                case ENTER:
+                    switch (currentSelection) {
+                        case 0: {
+                            restoreDataByID();
+                            system("pause");
+                            break;
+                        }
+                        case 1: {
+                            restoreAllData();
+                            system("pause");
+                            break;
+                        }
+                        case 2: {
+                            emptyData();
+                            system("pause");
+                            break;
+                        }
+                        case 3 : {
+                            return;
+                        }
+                    }
+                    break;
             }
-        } while (option != 0);
+        this_thread::sleep_for(chrono::milliseconds(20));    
+        } while (true); // Loop until "Exit" is selected and Enter is pressed
     }
 
-    void listMenuBackupData() {
-        cout << "+================================================================================+" << endl;
-        cout << "|                                                                                |" << endl;
-        cout << "|                         >>>  BACKUP DATA MANAGEMENT  <<<                       |" << endl;
-        cout << "|                                                                                |" << endl;
-        cout << "+================================================================================+" << endl;
-        cout << "|                                                                                |" << endl;
-        cout << "|  [1]  =>  Restore Data by ID                                                   |" << endl;
-        cout << "|  [2]  =>  Restore All Data                                                     |" << endl;
-        cout << "|  [3]  =>  Empty Backup Data                                                    |" << endl;
-        cout << "|  [0]  =>  Exit                                                                 |" << endl;
-        cout << "+================================================================================+" << endl;
-        cout << "|                >>>  Select an option by entering the number  <<<               |" << endl;
-        cout << "+================================================================================+" << endl;
+
+    enum KEY { UP = 72, DOWN = 80, ENTER = 13 }; // Arrow keys and Enter key
+
+    void setConsoleTextColor(int color) {
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
     }
+    void listMenuBackupData(int currentSelection, int totalOptions) {
+        cout << "+=================================================================================================+" << endl;
+        cout << "|                                                                                                 |" << endl;
+        cout << "|";cout << LIGHT_PEACH;
+        cout << "                                 >>>  BACKUP DATA MANAGEMENT  <<<                                ";cout << RESET;;cout << "|" << endl;
+        cout << "|                                                                                                 |" << endl;
+        cout << "+=================================================================================================+" << endl;
+        cout << "|                                                                                                 |" << endl;
+       
+        string options[] = {
+            "Restore Data By ID",
+            "Restore All Data",
+            "Empty Backup Data",
+            "Exit"
+        };
+
+        for (int i = 0; i < totalOptions; i++) {
+            if (i == currentSelection) {
+                setConsoleTextColor(15); // Bold (White text on black background)
+                cout << "|  =>    " << options[i] << string(62 - options[i].length(), ' ') << "                           |" << endl;
+            } else {
+                setConsoleTextColor(8); // Normal (Gray text on black background)
+                cout << "|        " << options[i] << string(62 - options[i].length(), ' ') << "                           |" << endl;
+            }
+        }
+
+        setConsoleTextColor(7); // Reset to normal color
+        cout << "|                                                                                                 |" << endl;
+        cout << "+=================================================================================================+" << endl;
+        cout << "|";cout << LIGHT_GREEN;
+        cout << "                          >>>  Select an option by pressing Enter  <<<                           ";cout << RESET;
+        cout << "|" << endl;
+        cout << "+=================================================================================================+" << endl;
+       }
 };
