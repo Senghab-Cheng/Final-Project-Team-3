@@ -203,6 +203,12 @@ void adminProfileSetting() {
 }
 
 void ui() {
+<<<<<<< HEAD
+    Login admin1;
+    if (admin1.userLogin()) {
+        AddEmployee employee1;
+        employee1.setEmployeeData();
+=======
     int currentSelection = 0;
     const int totalOptions = 3;
     char key;
@@ -316,6 +322,7 @@ void ui() {
 
         // Add a small delay to ensure the console has time to update
         this_thread::sleep_for(chrono::milliseconds(15));
+>>>>>>> a26787969bbc0acbe7adb65813e9e9a7815d29ac
     }
 }
 

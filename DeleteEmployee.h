@@ -149,6 +149,29 @@ private:
         }
     }
 
+<<<<<<< HEAD
+    void manage() {
+        short option;
+        do {
+            cout << "Select an option" << endl;
+            cout << "1. Delete Employee by ID" << endl;
+            cout << "2. Delete Employee by Username" << endl;
+            cout << "[+] Enter your option here: ";
+            cin >> option;
+
+            switch (option) {
+                case 1:
+                    deleteEmployeeById();
+                    break;
+                case 2:
+                    deleteEmployeeByUsername();
+                    break;
+                default:
+                    cout << "Invalid option." << endl;
+                    break;
+            }
+        } while (option != 0);
+=======
     void backupEmployeeToFile(size_t index) {
         ofstream nameFile("data/backupEmployeeNames.txt", ios::app);
         ofstream idFile("data/backupEmployeeIDs.txt", ios::app);
@@ -236,5 +259,6 @@ private:
         cout << "+================================================================================+" << endl;
         cout << "|                  >>>  Select an option by pressing enter  <<<                  |" << endl;
         cout << "+================================================================================+" << endl;
+>>>>>>> a26787969bbc0acbe7adb65813e9e9a7815d29ac
     }
 };
