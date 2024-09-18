@@ -1,0 +1,7 @@
+Username: ABC
+Email: abc123@gmail.com
+Password: 12345
+Bio: No idea
+Tel: 0123456789
+Telegram: ABC
+GitHub: abc123

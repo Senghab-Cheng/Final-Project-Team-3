@@ -1,132 +1,227 @@
 #pragma once
 
 #include <iostream>
-#include <algorithm>
 #include <iomanip>
+#include <fstream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <thread>
+#include <chrono>
+#include <conio.h>
+#include <Windows.h>
+
 #include "AddEmployee.h"
 #include "loadingBar.h"
 
 using namespace std;
 
 class ListEmployees {
-
 private:
-    string list;
+    vector<string> employeeNames;
+    vector<int> employeeIDs;
+    vector<string> employeeRoles;
+    vector<double> employeeSalaries;
+
+    void loadEmployeeData() {
+        ifstream nameFile("data/employeeNameFile.txt");
+        ifstream idFile("data/employeeIDFile.txt");
+        ifstream salaryFile("data/employeeSalaryFile.txt");
+        ifstream roleFile("data/employeePositionFile.txt");
+
+        if (!nameFile || !idFile || !salaryFile || !roleFile) {
+            cerr << "Error opening employee data files." << endl;
+            return;
+        }
+
+        employeeNames.clear();
+        employeeRoles.clear();
+        employeeIDs.clear();
+        employeeSalaries.clear();
+
+        string name, role;
+        int id;
+        double salary;
+
+        while (getline(nameFile, name) && idFile >> id && salaryFile >> salary && getline(roleFile, role)) {
+            employeeNames.push_back(name);
+            employeeIDs.push_back(id);
+            employeeSalaries.push_back(salary);
+            employeeRoles.push_back(role);
+        }
+    }
 
     void listAllEmployees() {
-        //13          34                                26                        25
-        
         cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
         cout << "| ID         | NAME                            | ROLE                    | SALARY                 |" << endl;
         cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
 
-        for (int i = 0; i < employeeNames.size(); i++) {
-
-            cout << "| " << setw(10) << left << employeeIDs[i]
-                << "| " << setw(33) << left << employeeNames[i]
-                << "| " << setw(25) << left << employeeRoles[i]
-                << "| " << right << fixed << setprecision(2) << employeeSalaries[i] << "$" << setw(15) << " |" << endl;
+        for (size_t i = 0; i < employeeNames.size(); i++) {
+            cout << "| " << setw(11) << left << employeeIDs[i]
+                 << "| " << setw(32) << left << employeeNames[i]
+                 << "| " << setw(24) << left << employeeRoles[i]
+                 << "| " << right << fixed << setprecision(2) << employeeSalaries[i] << "$" << setw(16) << " |" << endl;
         }
-        cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
-        cout << "Employee " << employeeIDs.size() << endl;
 
+        cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
+
+        vector<string> roles = employeeRoles;
+        sort(roles.begin(), roles.end());
+        roles.erase(unique(roles.begin(), roles.end()), roles.end());
+
+        cout << "Department : " << endl;
+        for (const auto& role : roles) {
+            int count = count_if(employeeRoles.begin(), employeeRoles.end(), [&role](const string& r) { return r == role; });
+            cout << role << " " << count << endl;
+        }
+        cout << endl << "Employee : " << employeeRoles.size() << endl;
     }
 
     void listEmployeeByPart() {
-        cout << "Enter employees department : ";
-        cin.ignore();
-        getline(cin, this->list);
-        //getLoadingBar(); // loading bar
+        vector<string> roles = employeeRoles;
+        sort(roles.begin(), roles.end());
+        roles.erase(unique(roles.begin(), roles.end()), roles.end());
+
+        cout << "Department : " << endl;
+        for (const auto& role : roles) {
+            cout << role << endl;
+        }
+        cout << endl;
+        string department;
+        cout << "Enter employee department: ";
+        //cin.ignore();
+        getline(cin, department);
         system("cls");
+
         int count = 0;
-        bool isFound = 0;
-        
+        bool isFound = false;
+
         cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
         cout << "| ID         | NAME                            | ROLE                    | SALARY                 |" << endl;
         cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
-        for (int i = 0; i < employeeNames.size(); i++) {
-            if (list == employeeRoles[i]) {
+
+        for (size_t i = 0; i < employeeNames.size(); i++) {
+            if (department == employeeRoles[i]) {
                 count++;
-                isFound = 1;
-                cout << "| " << setw(10) << left << employeeIDs[i]
-                    << "| " << setw(33) << left << employeeNames[i]
-                    << "| " << setw(25) << left << employeeRoles[i]
-                    << "| " << right << fixed << setprecision(2) << employeeSalaries[i] << "$" << setw(15) << " |" << endl;
+                isFound = true;
+                cout << "| " << setw(11) << left << employeeIDs[i]
+                     << "| " << setw(32) << left << employeeNames[i]
+                     << "| " << setw(24) << left << employeeRoles[i]
+                     << "| " << right << fixed << setprecision(2) << employeeSalaries[i] << "$" << setw(16) << " |" << endl;
             }
         }
+
         cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
-        if (isFound) cout << list << " " << count << endl;
-        else cout << list << " not found." << endl;
+        if (isFound) 
+            cout << department << " " << count << endl;
+        else 
+            cout << department << " not found." << endl;
     }
 
-    void listMenu() {
-        //listRoles();
+    enum KEY { UP = 72, DOWN = 80, ENTER = 13 }; // Arrow keys and Enter key
+
+    void setConsoleTextColor(int color) {
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
+    }
+
+    void highlightListMenu(int currentSelection, int totalOptions) {
+        
         cout << "+==============================================================================+" << endl;
         cout << "|                                                                              |" << endl;
         cout << "|                            >>>  LIST EMPLOYEES  <<<                          |" << endl;
         cout << "|                                                                              |" << endl;
         cout << "+==============================================================================+" << endl;
         cout << "|                                                                              |" << endl;
-        cout << "|  [1]  =>  List Employees By Departments                                      |" << endl;
-        cout << "|  [2]  =>  List All Employees                                                 |" << endl;
-        cout << "|  [0]  =>  Exit                                                               |" << endl;
+
+        string options[] = {
+            "List Employees By Departments",
+            "List All Employees",
+            "Exit"
+        };
+
+        for (int i = 0; i < totalOptions; i++) {
+            if (i == currentSelection) {
+                setConsoleTextColor(15); // Bold (White text on black background)
+                cout << "|  =>  " << options[i] << string(62 - options[i].length(), ' ') << "          |" << endl;
+            } else {
+                setConsoleTextColor(8); // Normal (Gray text on black background)
+                cout << "|      " << options[i] << string(62 - options[i].length(), ' ') << "          |" << endl;
+            }
+        }
+
+        setConsoleTextColor(7); // Reset to normal color
         cout << "|                                                                              |" << endl;
         cout << "+==============================================================================+" << endl;
-        cout << "|              >>>  Select an option by entering the number  <<<               |" << endl;
+        cout << "|              >>>  Select an option by pressing Enter  <<<                    |" << endl;
         cout << "+==============================================================================+" << endl;
+    }
+
+    void department() {
+        ifstream department("department.txt");
+
+        if (department) {
+            string line;
+            while (getline(department, line)) {
+                cout << line << endl;
+                this_thread::sleep_for(chrono::milliseconds(80));
+            }
+        } else {
+            cerr << "Unable to open the file!" << endl;
+        }
+    }
+
+    void allEmployees() {
+        ifstream allEmployees("allEmployee.txt");
+
+        if (allEmployees) {
+            string line;
+            while (getline(allEmployees, line)) {
+                cout << line << endl;
+                this_thread::sleep_for(chrono::milliseconds(80));
+            }
+        } else {
+            cerr << "Unable to open the file!" << endl;
+        }
     }
 
 public:
-
-    
     void listEmployee() {
-        short op;
+        int currentSelection = 0;
+        const int totalOptions = 3; // List by Department, List All, Exit
+        char key;
+        loadEmployeeData();
         do {
-            listMenu();
-            cout << "[+] Enter your option : "; cin >> op;
-            switch (op) {
-            case 1: {
-                //system("cls");
-                listEmployeeByPart();
-                break;
+            system("cls");
+            highlightListMenu(currentSelection, totalOptions);
+            key = _getch(); // Capture key press
+
+            switch (key) {
+                case UP:
+                    if (currentSelection > 0) currentSelection--; // Move up
+                    break;
+                case DOWN:
+                    if (currentSelection < totalOptions - 1) currentSelection++; // Move down
+                    break;
+                case ENTER:
+                    switch (currentSelection) {
+                        case 0: {
+                            listEmployeeByPart();
+                            system("pause");
+                            break;
+                        }
+                        case 1: {
+                            listAllEmployees();
+                            system("pause");
+                            break;
+                        }
+                        case 2: {
+                            //cout << "Exiting..." << endl;
+                            return; // Exit the function when "Exit" is selected
+                        }
+                    }
+                    break;
             }
-            case 2: {
-                //getLoadingBar();
-                system("cls");
-                listAllEmployees();
-                break;
-            }
-            case 0: {
-                cout << "Exiting..." << endl;
-                break;
-            }
-            default: {
-                cout << "INVALID OPTION!" << endl;
-                break;
-            }
-            }
-        } while (op);
+        this_thread::sleep_for(chrono::milliseconds(20));    
+        } while (true); // Loop until "Exit" is selected and Enter is pressed
     }
-
-    void listRoles() {
-        vector<string> roles = employeeRoles; // pass values of employeeRoles to roles
-        sort(roles.begin(), roles.end());
-        auto it = unique(roles.begin(), roles.end());
-        roles.erase(it, roles.end());
-
-        int count = 0;
-        cout << "Role : " << endl;
-        for (int i = 0; i < roles.size(); i++) {
-            cout << roles[i];
-            for (int j = 0; j < employeeRoles.size(); j++) {
-                if (employeeRoles[j] == roles[i]) {
-                    count++;
-                }
-            }
-            cout << "\t\t" << count << endl;
-            count = 0;
-        }
-        cout << endl << "Employee : " << employeeRoles.size() << endl;
-    }
-
 };

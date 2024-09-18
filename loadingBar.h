@@ -35,7 +35,7 @@ inline void getLoadingBar() {
     int width = 50;
     for (int i = 0; i <= 100; ++i) {
         printLoadingBar(i, width);
-        std::this_thread::sleep_for(std::chrono::milliseconds(20)); // Adjust speed of animation
+        std::this_thread::sleep_for(std::chrono::milliseconds(13)); // Adjust speed of animation
     }
     std::cout << std::endl;
 }
