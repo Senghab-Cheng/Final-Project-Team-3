@@ -82,9 +82,10 @@ class Manipulate{
         void manipulate() {
             int currentSelection = 0;
             const int totalOptions = 5;
+            char key;
             do {
                 listManipulate(currentSelection, totalOptions);
-                char key = _getch();
+                key = _getch();
                 switch (key) {
                     case UP:
                         if (currentSelection > 0) currentSelection--; // Move up

@@ -155,7 +155,7 @@ public:
         cout << CYAN;
         cout << "[+] Enter employee Name: ";
         cout << RESET;
-        //cin.ignore(); // To ignore any leftover newline characters from previous input
+        // cin.ignore(); // To ignore any leftover newline characters from previous input
         cout << LIGHT_GREEN;
         getline(cin, employeeName);
         cout << RESET;

@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <limits>
 #include <fstream>
+
 #include "AddEmployee.h"
 #include "BackupEmployee.h"
 #include "loadingBar.h"
@@ -112,6 +113,7 @@ private:
         cout << RESET;
 
         auto itID = find(employeeIDs.begin(), employeeIDs.end(), id);
+        getLoadingBar();
         if (itID != employeeIDs.end()) {
             size_t index = distance(employeeIDs.begin(), itID);
 
@@ -126,7 +128,6 @@ private:
 
             // Save updated vectors to the files
             updateEmployeeFiles();
-            getLoadingBar();
             cout << LIGHT_GREEN << "Employee with ID " << id << " deleted successfully." << RESET << endl;
         } else {
             cerr << BRIGHT_RED << "Employee with ID " << id << " not found." << RESET << endl;
@@ -134,14 +135,15 @@ private:
     }
 
     void deleteEmployeeByUsername() {
-        string username;
-        cout << CYAN << "[+] Enter employee Username to delete: " << RESET;
-        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        string name;
+        cout << CYAN << "[+] Enter employee name to delete: " << RESET;
+        // cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         cout << LIGHT_GREEN;
-        getline(cin, username);
+        getline(cin, name);
         cout << RESET;
 
-        auto itName = find(employeeNames.begin(), employeeNames.end(), username);
+        auto itName = find(employeeNames.begin(), employeeNames.end(), name);
+        getLoadingBar();
         if (itName != employeeNames.end()) {
             size_t index = distance(employeeNames.begin(), itName);
 
@@ -156,10 +158,9 @@ private:
 
             // Save updated vectors to the files
             updateEmployeeFiles();
-            getLoadingBar();
-            cout << LIGHT_GREEN << "Employee with username \"" << username << "\" deleted successfully." << RESET << endl;
+            cout << LIGHT_GREEN << "Employee with name \"" << name << "\" deleted successfully." << RESET << endl;
         } else {
-            cerr << BRIGHT_RED << "Employee with username \"" << username << "\" not found." << RESET << endl;
+            cerr << BRIGHT_RED << "Employee with name \"" << name << "\" not found." << RESET << endl;
         }
     }
 

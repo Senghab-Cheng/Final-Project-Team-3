@@ -124,9 +124,8 @@ private:
                  << "| " << setw(32) << left << employeeNamesBackupX[i]
                  << "| " << setw(24) << left << employeeRolesBackupX[i]
                  << "| " << right << fixed << setprecision(2) << employeeSalariesBackupX[i] << "$" << setw(16) << " |" << endl;
-        }
-
         cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
+        }
 
         vector<string> roles = employeeRolesBackupX;
         sort(roles.begin(), roles.end());

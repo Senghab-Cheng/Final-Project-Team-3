@@ -1,7 +1,7 @@
-Username: abc
-Email: @gmail.com
+Username: istad
+Email: istad@gmail.com
 Password: 123
-Bio: No idea
+Bio: Nephophile 
 Tel: 0123456789
 Telegram: ABC
 GitHub: abc123

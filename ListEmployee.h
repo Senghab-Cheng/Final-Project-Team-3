@@ -72,9 +72,8 @@ private:
                  << "| " << setw(32) << left << employeeNames[i]
                  << "| " << setw(24) << left << employeeRoles[i]
                  << "| " << right << fixed << setprecision(2) << employeeSalaries[i] << "$" << setw(16) << " |" << endl;
-        }
-
         cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
+        }
 
         vector<string> roles = employeeRoles;
         sort(roles.begin(), roles.end());
@@ -144,10 +143,10 @@ private:
                           << "| " << std::setw(32) << std::left << employeeNames[i]
                           << "| " << std::setw(24) << std::left << employeeRoles[i]
                           << "| " << std::right << std::fixed << std::setprecision(2) << employeeSalaries[i] << "$" << std::setw(16) << " |" << std::endl;
+            std::cout << "+------------+---------------------------------+-------------------------+------------------------+" << std::endl;
             }
         }
 
-        std::cout << "+------------+---------------------------------+-------------------------+------------------------+" << std::endl;
         if (isFound) 
             std::cout << department << " department has " << count << " employees." << std::endl;
         else 
