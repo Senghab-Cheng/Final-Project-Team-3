@@ -75,7 +75,7 @@ private:
             //getLoadingBar();
             //system("cls");
             cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
-            cout << "| ID         | NAME                            | ROLE                    | SALARY                 |" << endl;
+            cout << "| ID         | NAME                            | JOB TITLE               | SALARY                 |" << endl;
             cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
             
             for (size_t i = 0; i < employeeNames.size(); i++) {
@@ -100,7 +100,7 @@ private:
             //getLoadingBar();
             //system("cls");
             cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
-            cout << "| ID         | NAME                            | ROLE                    | SALARY                 |" << endl;
+            cout << "| ID         | NAME                            | JOB TITLE               | SALARY                 |" << endl;
             cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
 
             for (size_t i = 0; i < employeeNames.size(); i++) {
@@ -139,7 +139,7 @@ private:
             //getLoadingBar();
             //system("cls");
             cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
-            cout << "| ID         | NAME                            | ROLE                    | SALARY                 |" << endl;
+            cout << "| ID         | NAME                            | JOB TITLE               | SALARY                 |" << endl;
             cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
             cout << "| " << setw(11) << left << employeeIDs[index]
                  << "| " << setw(32) << left << employeeNames[index]

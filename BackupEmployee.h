@@ -116,7 +116,7 @@ private:
         }
         
         cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
-        cout << "| ID         | NAME                            | ROLE                    | SALARY                 |" << endl;
+        cout << "| ID         | NAME                            | JOB TITLE               | SALARY                 |" << endl;
         cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
 
         for (size_t i = 0; i < employeeIDsBackupX.size(); ++i) {
@@ -131,7 +131,7 @@ private:
         sort(roles.begin(), roles.end());
         roles.erase(unique(roles.begin(), roles.end()), roles.end());
         cout << "===================================================================================================" << endl;
-        cout << "Department : " << endl;
+        cout << "Job Title : " << endl;
         for (const auto& role : roles) {
             int count = count_if(employeeRolesBackupX.begin(), employeeRolesBackupX.end(), [&role](const string& r) { return r == role; });
             cout << role << " " << count << endl;

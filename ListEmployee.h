@@ -64,7 +64,7 @@ private:
     void listAllEmployees() {
         getLoadingBar();
         cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
-        cout << "| ID         | NAME                            | ROLE                    | SALARY                 |" << endl;
+        cout << "| ID         | NAME                            | JOB TITLE               | SALARY                 |" << endl;
         cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
 
         for (size_t i = 0; i < employeeNames.size(); i++) {
@@ -79,7 +79,7 @@ private:
         sort(roles.begin(), roles.end());
         roles.erase(unique(roles.begin(), roles.end()), roles.end());
         cout << "===================================================================================================" << endl;
-        cout << "Department : " << endl;
+        cout << "Job Title : " << endl;
         for (const auto& role : roles) {
             int count = count_if(employeeRoles.begin(), employeeRoles.end(), [&role](const string& r) { return r == role; });
             cout << role << " " << count << endl;
@@ -106,7 +106,7 @@ private:
         // Display department options
         std::cout << std::endl;
         std::cout << "===================================================================================================" << std::endl;
-        std::cout << "Department : ";
+        std::cout << "Job Titles : ";
         for (const auto& role : roles) {
             std::cout << role << "   ";
         }
@@ -115,7 +115,7 @@ private:
 
         // Get department input from the user
         std::string department;
-        std::cout << CYAN << "Enter employee department: " << RESET;
+        std::cout << CYAN << "Enter employees Job Title: " << RESET;
         cout << LIGHT_GREEN;
         getline(std::cin, department);
         cout << RESET;
@@ -125,10 +125,10 @@ private:
         getLoadingBar();
         // Display table header
         std::cout << "+------------+---------------------------------+-------------------------+------------------------+" << std::endl;
-        std::cout << "| ID         | NAME                            | ROLE                    | SALARY                 |" << std::endl;
+        std::cout << "| ID         | NAME                            | JOB TITLE               | SALARY                 |" << std::endl;
         std::cout << "+------------+---------------------------------+-------------------------+------------------------+" << std::endl;
 
-        int count = 0;
+        size_t count = 0;
         bool isFound = false;
 
         // Iterate through the employees and display those that match the department
@@ -148,9 +148,9 @@ private:
         }
 
         if (isFound) 
-            std::cout << department << " department has " << count << " employees." << std::endl;
+            std::cout << department << " has " << count << " employees." << std::endl;
         else 
-            std::cout << BRIGHT_RED << department << " department not found." << RESET << std::endl;
+            std::cout << BRIGHT_RED << department << " not found." << RESET << std::endl;
     }
 
     enum KEY { UP = 72, DOWN = 80, ENTER = 13 }; // Arrow keys and Enter key
@@ -170,7 +170,7 @@ private:
         cout << "|                                                                                                 |" << endl;
 
         string options[] = {
-            "List Employees By Departments",
+            "List Employees By Job Title",
             "List All Employees",
             "Exit"
         };

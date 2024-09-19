@@ -135,6 +135,8 @@ private:
     }
 
     void deleteEmployeeByUsername() {
+        cin.ignore();
+        cout << '\r';
         string name;
         cout << CYAN << "[+] Enter employee name to delete: " << RESET;
         // cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
