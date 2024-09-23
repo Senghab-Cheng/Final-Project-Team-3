@@ -58,6 +58,7 @@ private:
     }
 
     void searchEmployeeByName() {
+        cin.ignore();
         cout << CYAN << "[+] Enter employee name (or partial name): " << RESET;
         //cin.ignore();
         string employeeName;
@@ -88,14 +89,14 @@ private:
                          << "| " << setw(24) << left << employeeRoles[i]
                          << "| " << right << fixed << setprecision(2) << employeeSalaries[i] << "$" << setw(16) << " |" << endl;
                     isFound = true;
+                    cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
                 }
             }
 
             if (!isFound) {
                 cout << BRIGHT_RED << "No employee names contain the letter '" << employeeNameLetter << "'." << RESET << endl;
-            } else {
-                cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
-            }
+            } 
+            
         } else {
             //getLoadingBar();
             //system("cls");
@@ -117,7 +118,7 @@ private:
             }
 
             if (!isFound) {
-                cout << LIGHT_GREEN << "Employee with name / " << employeeName << " / not found." << RESET << endl;
+                cout << BRIGHT_RED << "Employee with name / " << employeeName << " / not found." << RESET << endl;
             } else {
                 cout << "+------------+---------------------------------+-------------------------+------------------------+" << endl;
             }

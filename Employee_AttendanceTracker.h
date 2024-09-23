@@ -135,7 +135,7 @@ class Employee{
             cout << "|                                                                                                 |" << endl;
             cout << "+=================================================================================================+" << endl;
             //getLoadingBar();
-            string SERVER_URL = "http://192.168.1.246:5466/checkin";  // Check-in URL
+            string SERVER_URL = "http://192.168.1.102:5466/checkin";  // Check-in URL
             string command = "curl qrenco.de/" + SERVER_URL;
             system(command.c_str());
             this_thread::sleep_for(chrono::seconds(4));
@@ -170,7 +170,7 @@ class Employee{
             cout << "+=================================================================================================+" << endl;
 
             //getLoadingBar();
-            string SERVER_URL = "http://192.168.1.246:5466/checkout";  // Check-out URL
+            string SERVER_URL = "http://192.168.1.102:5466/checkout";  // Check-out URL
             string command = "curl qrenco.de/" + SERVER_URL;
             system(command.c_str());
             this_thread::sleep_for(chrono::seconds(4));

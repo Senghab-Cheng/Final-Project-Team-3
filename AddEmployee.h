@@ -170,7 +170,7 @@ public:
 
         // Enter employee position
         cout << CYAN;
-        cout << "[+] Enter employee Position: ";
+        cout << "[+] Enter employee Job Title: ";
         cout << RESET;
         cout << LIGHT_GREEN;
         getline(cin, employeePosition);

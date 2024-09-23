@@ -1,7 +1,7 @@
 Username: istad
 Email: istad@gmail.com
 Password: 123
-Bio: Nephophile 
-Tel: 0123456789
-Telegram: ABC
-GitHub: abc123
+Bio: Pre-University C++ 1st gen
+Tel: 012 123 456
+Telegram: ISTAD
+GitHub: Istad123

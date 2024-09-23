@@ -3,6 +3,8 @@
 #include <fstream>
 #include <algorithm>
 
+#include "loadingBar.h"
+
 using namespace std;
 
 #define LIGHT_BLUE "\033[38;5;123m"
@@ -193,7 +195,7 @@ private:
         
         string options[] = {
             "Update Employee Salary",
-            "Update Employee Position",
+            "Update Employee Job Title",
             "Update Employee Name",
             "Exit"
         };

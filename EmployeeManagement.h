@@ -96,6 +96,7 @@ class Manipulate{
                     case ENTER:
                         switch (currentSelection) {
                             case 0: {
+                                cin.ignore();
                                 AddEmployee emp1;
                                 emp1.setEmployeeData();
                                 break;

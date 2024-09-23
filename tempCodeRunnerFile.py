@@ -5,8 +5,8 @@ from datetime import datetime
 app = Flask(__name__)
 
 # Replace with your actual bot token and chat ID
-TELEGRAM_BOT_TOKEN = "7404828577:AAE-hDZPwYhVDwhkHxklVhhEftS_CJynIiY"
-TELEGRAM_CHAT_ID = "1665334193"
+TELEGRAM_BOT_TOKEN = "7881312497:AAGthKuxmus5Knofssie0WgEGT-fXeOraUI"
+TELEGRAM_CHAT_ID = "1275124991"
 
 def send_telegram_message(message):
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"

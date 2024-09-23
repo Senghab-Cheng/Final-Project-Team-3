@@ -244,6 +244,7 @@ public:
                 case ENTER:
                     switch (currentSelection) {
                         case 0: {
+                            cin.ignore();
                             listEmployeeByPart();
                             system("pause");
                             break;
